@@ -14,10 +14,12 @@
     <ClInclude Include="src\Kortax.h" />
     <ClInclude Include="src\Kortax\Application.h" />
     <ClInclude Include="src\Kortax\Core.h" />
+    <ClInclude Include="src\Kortax\dbg\Log.h" />
     <ClInclude Include="src\Kortax\EntryPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Kortax\Application.cpp" />
+    <ClCompile Include="src\Kortax\dbg\Log.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
