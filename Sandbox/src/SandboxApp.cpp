@@ -5,7 +5,7 @@ class Sandbox : public Kortax::Application
 public:
 	Sandbox()
 	{
-		Kortax::LogString("Sandbox creada!");
+		Kortax::LogString("Sandbox creada! \n");
 	}
 
 	~Sandbox()

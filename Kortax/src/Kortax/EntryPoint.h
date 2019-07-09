@@ -7,7 +7,8 @@ extern Kortax::Application* Kortax::CreateApplication();
 int main(int argc, char** argv)
 {
 	auto sandbox = Kortax::CreateApplication();
-	printf("Game Engine entry point ! \n");
+	const char* testName = "Kortax";
+	Kortax::LogFormatString("Game Engine < %s > entry point ! \n", testName);
 	sandbox->Run();
 	delete sandbox;
 }
