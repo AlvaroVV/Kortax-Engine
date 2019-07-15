@@ -38,5 +38,8 @@
     <ClCompile Include="src\Kortax\dbg\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Kortax\entry\win32\AppMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

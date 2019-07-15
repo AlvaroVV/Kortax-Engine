@@ -12,3 +12,9 @@ namespace Kortax
 	KORTAX_API void  LogFormatString(const char* aFmt, ...);
 
 };
+
+class MyLog
+{
+public:
+	void test() { printf("TEST"); }
+};

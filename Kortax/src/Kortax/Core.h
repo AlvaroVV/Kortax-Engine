@@ -1,5 +1,6 @@
 #pragma once
 
+
 #ifdef KT_PLATFORM_WINDOWS
 	#ifdef KT_BUILD_DLL
 		#define KORTAX_API __declspec(dllexport)
