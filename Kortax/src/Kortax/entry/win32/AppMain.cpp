@@ -1,9 +1,37 @@
 #include <Windows.h>
+#include "../../dbg/Log.h"
 
+/*
+* Callback used to process the Windows' messages (user and OS)
+* @param hwnd, window handle
+* @param msg, the message code,
+* @param wParam and lParam, contains additional data depending on message
+* @return LRESULT, integer value returned to Windows, the program response.
+*/
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wPAram, LPARAM lParam)
 {
 	//Default Message Handling
-	return DefWindowProc(hwnd, msg, wPAram, lParam);
+	switch (msg)
+	{
+		case WM_LBUTTONDOWN:
+		{
+			char fileName[MAX_PATH];
+			HINSTANCE hInstance = GetModuleHandle(NULL);
+
+			GetModuleFileName(hInstance, fileName, MAX_PATH);
+			MessageBox(hwnd, fileName, "El programa es: ", MB_OK | MB_ICONINFORMATION);
+		}
+		break;
+		case WM_CLOSE: 
+			DestroyWindow(hwnd);
+			break;
+		case WM_DESTROY:
+			PostQuitMessage(0); //returns false in getMessage so stops loop
+			break;
+		default:
+			return DefWindowProc(hwnd, msg, wPAram, lParam);
+
+	}
 }
 
 /* WinMain is the Main function in Windows
@@ -64,8 +92,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		TranslateMessage(&msg); //Related with keyboard. Translates keystrokes into characters.
+		DispatchMessage(&msg); //Calls the window procedure
 	}
 	
 }
