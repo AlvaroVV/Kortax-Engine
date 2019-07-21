@@ -1,16 +1,18 @@
 #ifdef KT_PLATFORM_WINDOWS
+#include <Windows.h>
 #include <stdio.h>
-#include <stdarg.h>
 #include "Log.h"
 
-namespace Kortax
+namespace kortax
 {
 	static const short int LOG_BUFFER_SIZE = 4096;
 	static char sFormatBuffer[LOG_BUFFER_SIZE];
 
 	void LogString(const char* aStr)
 	{
-		printf( aStr );
+
+		OutputDebugStringA(aStr);
+		OutputDebugStringA("\n");
 	}
 
 	void LogFormatString(const char* aFmt, ...)

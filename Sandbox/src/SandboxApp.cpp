@@ -1,11 +1,11 @@
 #include <Kortax.h>
 
-class Sandbox : public Kortax::Application
+class Sandbox : public kortax::Application
 {
 public:
 	Sandbox()
 	{
-		Kortax::LogString("Sandbox creada! \n");
+		kortax::LogString("Sandbox creada! \n");
 	}
 
 	~Sandbox()
@@ -15,7 +15,7 @@ public:
 
 };
 
-Kortax::Application* Kortax::CreateApplication()
+kortax::Application* kortax::CreateApplication()
 {
 	return new Sandbox();
 }

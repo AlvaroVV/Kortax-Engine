@@ -1,6 +1,6 @@
 #include "Application.h"
 
-namespace Kortax {
+namespace kortax {
 
 	Application::Application()
 	{

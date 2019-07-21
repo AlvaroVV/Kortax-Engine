@@ -24,11 +24,13 @@
     <ClInclude Include="src\Kortax\Core.h" />
     <ClInclude Include="src\Kortax\dbg\Log.h" />
     <ClInclude Include="src\Kortax\EntryPoint.h" />
+    <ClInclude Include="src\Kortax\entry\win32\Window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Kortax\Application.cpp" />
     <ClCompile Include="src\Kortax\dbg\Log.cpp" />
     <ClCompile Include="src\Kortax\entry\win32\AppMain.cpp" />
+    <ClCompile Include="src\Kortax\entry\win32\Window.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -84,6 +86,9 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>KT_PLATFORM_WINDOWS;KT_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -98,17 +103,26 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>KT_PLATFORM_WINDOWS;KT_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>KT_PLATFORM_WINDOWS;KT_BUILD_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

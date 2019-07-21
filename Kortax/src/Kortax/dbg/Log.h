@@ -4,7 +4,7 @@
 #include <fstream>
 #include "../Core.h"
 
-namespace Kortax
+namespace kortax
 {
 	//Print a string
 	KORTAX_API void  LogString(const char* aStr);

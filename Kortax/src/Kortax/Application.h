@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-namespace Kortax
+namespace kortax
 { 
 	class KORTAX_API Application
 	{

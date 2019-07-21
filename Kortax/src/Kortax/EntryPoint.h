@@ -2,7 +2,7 @@
 
 #ifdef KT_PLATFORM_WINDOWS
 
-extern Kortax::Application* Kortax::CreateApplication();
+extern kortax::Application* kortax::CreateApplication();
 
 /*
 int main(int argc, char** argv)

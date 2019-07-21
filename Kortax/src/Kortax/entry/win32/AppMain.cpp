@@ -1,6 +1,8 @@
 #include <Windows.h>
 #include "../../dbg/Log.h"
 
+void SetWindowSize(HWND hwnd, int width, int height);
+
 /*
 * Callback used to process the Windows' messages (user and OS)
 * @param hwnd, window handle
@@ -22,12 +24,32 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wPAram, LPARAM lParam)
 			MessageBox(hwnd, fileName, "El programa es: ", MB_OK | MB_ICONINFORMATION);
 		}
 		break;
+		case WM_SIZE:
+		{
+			int width = LOWORD (lParam);
+			int height = HIWORD(lParam);
+			kortax::LogFormatString("Cambiado el tamaño: [%i,%i]", width,height);
+
+		}
+		break;
+		case WM_PAINT :
+		{
+			PAINTSTRUCT ps;
+			HDC hdc = BeginPaint(hwnd, &ps);
+
+			// All painting occurs here, between BeginPaint and EndPaint.
+
+			FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+
+			EndPaint(hwnd, &ps);
+		}
+		return 0;
 		case WM_CLOSE: 
 			DestroyWindow(hwnd);
-			break;
+		break;
 		case WM_DESTROY:
 			PostQuitMessage(0); //returns false in getMessage so stops loop
-			break;
+		break;
 		default:
 			return DefWindowProc(hwnd, msg, wPAram, lParam);
 
@@ -50,7 +72,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	WNDCLASSEX  wc = {}; //Window structure. Gestiona mejor los estilos que WNDCLASS
 	wc.cbSize = sizeof(WNDCLASSEX);
-	wc.style = CS_HREDRAW | CS_VREDRAW; //Redeaw when horizontal and vertical movement.
+	wc.style = CS_HREDRAW | CS_VREDRAW; //Redraw when horizontal and vertical movement.
 	wc.lpfnWndProc = WndProc; //Puntero al procedure
 	wc.cbClsExtra = 0; //Cantidad extra de asignacion de memoria para datos
 	wc.cbWndExtra = 0; //Cantidad extra de memoria por ventana de este tipo.
@@ -70,14 +92,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 
 	//CREATE WINDOW
+	//Calculate window size based on client size
+	int width = 480;
+	int height = 240;
+	RECT rect = {0,0,width,height};
+
+	AdjustWindowRect(&rect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_THICKFRAME, false);
 	HWND hwnd;
 	hwnd = CreateWindowEx(
-		WS_EX_CLIENTEDGE,
-		g_szClassName,
-		"The title of my window",
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, CW_USEDEFAULT, 240, 120,
+		WS_EX_CLIENTEDGE, //estilo extendido
+		g_szClassName, //nombre de la clase registrada
+		"The title of my window", //título de la ventana
+		WS_OVERLAPPEDWINDOW, //Estilo de la ventana
+		CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, //Window size, not client
 		NULL, NULL, hInstance, NULL);
+
+	SetWindowSize(hwnd, width, height);
 
 	if (!hwnd)
 	{
@@ -99,3 +129,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 }
 
 
+void SetWindowSize(HWND hwnd, int width, int height)
+{
+	RECT lCurrentRect;
+	::GetWindowRect(hwnd, &lCurrentRect);
+	RECT lClientRect = {0,0,width, height};
+
+	WINDOWINFO lInfo;
+	::GetWindowInfo(hwnd, &lInfo);
+	::AdjustWindowRect(&lClientRect, lInfo.dwStyle, false);
+
+	::MoveWindow(hwnd, lCurrentRect.left, lCurrentRect.top, lClientRect.right - lClientRect.left, lClientRect.bottom - lClientRect.top, true);
+}
