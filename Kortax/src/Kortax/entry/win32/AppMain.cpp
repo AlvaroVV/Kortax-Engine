@@ -1,5 +1,8 @@
 #include <Windows.h>
-#include "../../dbg/Log.h"
+#include <Kortax\Kortax.h>
+#include "Kortax\dbg\Log.h"
+#include "Kortax\entry\Application.h"
+
 
 void SetWindowSize(HWND hwnd, int width, int height);
 
@@ -39,7 +42,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wPAram, LPARAM lParam)
 
 			// All painting occurs here, between BeginPaint and EndPaint.
 
-			FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_WINDOW + 1));
+			FillRect(hdc, &ps.rcPaint, (HBRUSH)(COLOR_ACTIVEBORDER + 1));
 
 			EndPaint(hwnd, &ps);
 		}
@@ -80,7 +83,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION); //Handle al icono grande (32x32) Alt + Tab
 	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);//HAndle al icono pequeño (16x16) Barra de tareas y esquina superior izquierda
 	wc.hCursor = LoadCursor(NULL, IDC_ARROW); //Cursor en ventana
-	wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1); //Background color
+	wc.hbrBackground = (HBRUSH)(COLOR_WINDOWFRAME + 1); //Background color
 	wc.lpszMenuName = NULL; //Reource name of the calss menu
 	wc.lpszClassName = g_szClassName; //Nombre de la ventana
 
@@ -96,18 +99,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	int width = 480;
 	int height = 240;
 	RECT rect = {0,0,width,height};
+	DWORD dwStyle = WS_OVERLAPPEDWINDOW;
+	DWORD dxStyle = WS_EX_WINDOWEDGE;
 
-	AdjustWindowRect(&rect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_THICKFRAME, false);
+	AdjustWindowRectEx(&rect, dwStyle,  false, dxStyle);
+
 	HWND hwnd;
 	hwnd = CreateWindowEx(
-		WS_EX_CLIENTEDGE, //estilo extendido
+		dxStyle, //estilo extendido
 		g_szClassName, //nombre de la clase registrada
 		"The title of my window", //título de la ventana
-		WS_OVERLAPPEDWINDOW, //Estilo de la ventana
+		dwStyle, //Estilo de la ventana
 		CW_USEDEFAULT, CW_USEDEFAULT, rect.right - rect.left, rect.bottom - rect.top, //Window size, not client
 		NULL, NULL, hInstance, NULL);
-
-	SetWindowSize(hwnd, width, height);
 
 	if (!hwnd)
 	{
@@ -125,7 +129,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		TranslateMessage(&msg); //Related with keyboard. Translates keystrokes into characters.
 		DispatchMessage(&msg); //Calls the window procedure
 	}
-	
+
+	kortax::IKortaxApplication* lApp = nullptr;
+	//lApp = kortax::CreateApplication();
+	kortax::testAPI();
 }
 
 
