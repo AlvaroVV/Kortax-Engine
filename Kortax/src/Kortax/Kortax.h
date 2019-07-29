@@ -5,16 +5,16 @@
 #include "Kortax\entry\Application.h"
 
 
-namespace kortax
-{
+//namespace kortax
+//{
 	//Must be implemented in client side
-	extern IKortaxApplication* CreateApplication();
+extern kortax::IKortaxApplication* kortax::CreateApplication();
 	//extern bool DestroyApplication();
 
 	//extern void GetDefaultResolution(int& aResX, int& aResY);
 
 	//SEND EVENTS
-}
+//}
 
 int main(int argc, char** argv)
 {

@@ -3,7 +3,8 @@
 #include "Kortax\Core.h"
 
 namespace kortax
-{ 
+{
+
 	class KORTAX_API IKortaxApplication
 	{
 	public:
@@ -16,5 +17,7 @@ namespace kortax
 		
 
 	};
+
+	IKortaxApplication* CreateApplication();
 }
 
