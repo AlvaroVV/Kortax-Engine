@@ -8,7 +8,7 @@
 namespace kortax
 {
 	//Must be implemented in client side
-	extern kortax::IKortaxApplication* CreateApplication();
+	extern IKortaxApplication* CreateApplication();
 	//extern bool DestroyApplication();
 
 	//extern void GetDefaultResolution(int& aResX, int& aResY);
