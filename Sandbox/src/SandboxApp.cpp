@@ -1,9 +1,6 @@
 #include <Kortax\Kortax.h>
-#include "Kortax\dbg\Log.h"
-//#include <Kortax\entry\Application.h>
 
-
-class Sandbox //: public kortax::IKortaxApplication
+class Sandbox : public kortax::IKortaxApplication
 {
 public:
 
@@ -12,23 +9,15 @@ public:
 		kortax::LogString("Sandbox creada! \n");
 	}
 
-
+	virtual bool Init()
+	{
+		kortax::LogString("Init del Sandbox!");
+		return true;
+	}
 
 };
 
-namespace kortax
-{
-	void testAPI()
-	{
 
-	}
-}
-
-void kortax::testAPI()
-{
-	//kortax::LogString("test API \n");
-}
-/*
 kortax::IKortaxApplication* kortax::CreateApplication()
 {
 	return new Sandbox();

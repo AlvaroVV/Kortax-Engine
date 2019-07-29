@@ -66,6 +66,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wPAram, LPARAM lParam)
 * @param lpCmdLine, arguments for command line
 * @param nCmdShow, flag that says whether the main app will be min, max or shown normally
 */
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR lpCmdLine, int nCmdShow)
 {
@@ -129,10 +130,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		TranslateMessage(&msg); //Related with keyboard. Translates keystrokes into characters.
 		DispatchMessage(&msg); //Calls the window procedure
 	}
-
-	kortax::IKortaxApplication* lApp = nullptr;
-	//lApp = kortax::CreateApplication();
-	kortax::testAPI();
 }
 
 
