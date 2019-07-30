@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include <Kortax\Kortax.h>
+#include "Kortax\dbg\Log.h"
 
 
 void SetWindowSize(HWND hwnd, int width, int height);

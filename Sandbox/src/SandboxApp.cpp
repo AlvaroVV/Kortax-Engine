@@ -1,4 +1,4 @@
-#include <Kortax\Kortax.h>
+#include "Kortax.h"
 
 class Sandbox : public kortax::IKortaxApplication
 {

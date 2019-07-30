@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Core.h"
-#include "dbg\Log.h"
+#include "Kortax\dbg\Log.h"
 #include "Kortax\entry\Application.h"
 
 

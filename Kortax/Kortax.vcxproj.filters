@@ -27,7 +27,7 @@
     <ClInclude Include="src\Kortax\entry\Application.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Kortax\Kortax.h">
+    <ClInclude Include="src\Kortax.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

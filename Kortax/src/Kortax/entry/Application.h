@@ -5,7 +5,7 @@
 namespace kortax
 {
 
-	class KORTAX_API IKortaxApplication
+	class  IKortaxApplication
 	{
 	public:
 		
@@ -18,6 +18,6 @@ namespace kortax
 
 	};
 
-	IKortaxApplication* CreateApplication();
+	 IKortaxApplication*  CreateApplication();
 }
 
