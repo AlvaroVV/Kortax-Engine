@@ -1,5 +1,6 @@
 #include <Windows.h>
-#include "Kortax\dbg\Log.h"
+#include "Kortax.h"
+
 
 
 void SetWindowSize(HWND hwnd, int width, int height);
@@ -68,7 +69,9 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wPAram, LPARAM lParam)
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	PSTR lpCmdLine, int nCmdShow)
 {
-
+	AllocConsole();
+	AttachConsole(GetCurrentProcessId());
+	freopen("CON", "w", stdout);
 	//REGISTER MAIN CLASS
 	const char g_szClassName[] = "myWindowClass";
 
@@ -121,6 +124,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 	ShowWindow(hwnd, nCmdShow);
 	UpdateWindow(hwnd);
 
+	kortax::IKortaxApplication *app = kortax::CreateApplication();
+	app->Init();
 	
 	MSG msg;
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
@@ -128,6 +133,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		TranslateMessage(&msg); //Related with keyboard. Translates keystrokes into characters.
 		DispatchMessage(&msg); //Calls the window procedure
 	}
+
+	
+
+	
 }
 
 

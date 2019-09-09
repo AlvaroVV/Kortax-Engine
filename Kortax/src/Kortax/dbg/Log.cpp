@@ -10,9 +10,9 @@ namespace kortax
 
 	void LogString(const char* aStr)
 	{
+		printf(aStr);
+		printf("\n");
 
-		OutputDebugStringA(aStr);
-		OutputDebugStringA("\n");
 	}
 
 	void LogFormatString(const char* aFmt, ...)

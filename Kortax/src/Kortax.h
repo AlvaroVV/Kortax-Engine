@@ -7,7 +7,7 @@
 //namespace kortax
 //{
 	//Must be implemented in client side
-extern kortax::IKortaxApplication* kortax::CreateApplication();
+extern  kortax::IKortaxApplication* kortax::CreateApplication();
 	//extern bool DestroyApplication();
 
 	//extern void GetDefaultResolution(int& aResX, int& aResY);
@@ -15,6 +15,7 @@ extern kortax::IKortaxApplication* kortax::CreateApplication();
 	//SEND EVENTS
 //}
 
+/*
 int main(int argc, char** argv)
 {
 	kortax::LogString("Start kortax Engine!");
@@ -22,3 +23,4 @@ int main(int argc, char** argv)
 	app->Init();
 	delete app;
 }
+ */

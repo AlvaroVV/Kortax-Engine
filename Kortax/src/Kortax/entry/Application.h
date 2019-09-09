@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Kortax\Core.h"
+//#include "Kortax\Core.h"
 
 namespace kortax
 {

@@ -1,5 +1,8 @@
 #include "Kortax.h"
 
+#define DEB_KORTAX
+
+
 class Sandbox : public kortax::IKortaxApplication
 {
 public:
@@ -22,3 +25,4 @@ kortax::IKortaxApplication* kortax::CreateApplication()
 {
 	return new Sandbox();
 }
+

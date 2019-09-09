@@ -2,19 +2,13 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include "../Core.h"
+//#include "../Core.h"
 
 namespace kortax
 {
 	//Print a string
-	KORTAX_API void  LogString(const char* aStr);
+	void  LogString(const char* aStr);
 
-	KORTAX_API void  LogFormatString(const char* aFmt, ...);
+	void  LogFormatString(const char* aFmt, ...);
 
-};
-
-class MyLog
-{
-public:
-	void test() { printf("TEST"); }
 };
