@@ -1,7 +1,5 @@
 #include "Kortax.h"
 
-#define DEB_KORTAX
-
 
 class Sandbox : public kortax::IKortaxApplication
 {

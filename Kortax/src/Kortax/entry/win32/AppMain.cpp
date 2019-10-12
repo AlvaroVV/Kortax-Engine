@@ -1,7 +1,12 @@
 #include <Windows.h>
+#include <gl\GL.h> //Header file for the opengl32 library
+#include <gl\GLU.h> //Header file for the Glu32 Library
 #include "Kortax.h"
 
-
+HGLRC hRC = NULL; //Permanent Rendering context
+HDC hDc = NULL; //Private GDI Device Context
+HWND hwnd = NULL; //Holds our Windows Handle
+HINSTANCE hInstance = NULL; //HOlds The Instance of The Application
 
 void SetWindowSize(HWND hwnd, int width, int height);
 
