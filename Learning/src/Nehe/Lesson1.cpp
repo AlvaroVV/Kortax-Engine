@@ -207,9 +207,9 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	if (!(hWnd = CreateWindowEx(dwExStyle,	//Extended Style
 		"OpenGL",							//Class Name
 		title,								//Title window name
-		dwStyle,							//Selected window style
+		dwStyle |							//Selected window style
 		WS_CLIPSIBLINGS |					//Required Window style
-		WS_CLIPCHILDREN |					//Required Window style
+		WS_CLIPCHILDREN ,					//Required Window style
 		0, 0,								//Window position
 		windowRect.right - windowRect.left, //Calculate adjusted window width
 		windowRect.bottom - windowRect.top,	//Calculate adjusted window height
