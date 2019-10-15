@@ -79,13 +79,23 @@ int DrawGLScene(GLvoid)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear screen and depth buffer
 	glLoadIdentity();
 
-	glTranslatef(0.0f, 0.0f, -6.0f);
+	//Transformamos la matriz MODELVIEW, por lo que alejamos la escena en -z.
+	glTranslatef(-1.5f, 0.0f, -6.0f);
 	glBegin(GL_TRIANGLES);
 		glVertex3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(-1.0f, -1.0f, 0.0f);
 		glVertex3f(1.0f, -1.0f, 0.0f);
 	glEnd();
 
+	//Aplicamos transformacion SOBRE la ya aplicada.
+	glTranslatef(3.0f, 0.0f, 0.0f);
+
+	glBegin(GL_QUADS);                      // Draw A Quad
+	glVertex3f(-1.0f, 1.0f, 0.0f);              // Top Left
+	glVertex3f(1.0f, 1.0f, 0.0f);              // Top Right
+	glVertex3f(1.0f, -1.0f, 0.0f);              // Bottom Right
+	glVertex3f(-1.0f, -1.0f, 0.0f);              // Bottom Left
+	glEnd();                            // Done Drawing The Quad
 	//glTranslatef(3.0f, 0.0f, 0.0f);
 	return TRUE;
 }
