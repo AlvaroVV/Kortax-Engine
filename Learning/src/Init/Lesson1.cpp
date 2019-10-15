@@ -78,6 +78,15 @@ int DrawGLScene(GLvoid)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear screen and depth buffer
 	glLoadIdentity();
+
+	glTranslatef(0.0f, 0.0f, -6.0f);
+	glBegin(GL_TRIANGLES);
+		glVertex3f(0.0f, 1.0f, 0.0f);
+		glVertex3f(-1.0f, -1.0f, 0.0f);
+		glVertex3f(1.0f, -1.0f, 0.0f);
+	glEnd();
+
+	//glTranslatef(3.0f, 0.0f, 0.0f);
 	return TRUE;
 }
 
@@ -177,10 +186,13 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT; //Specifies whether certain members of the DEVMODE have been initialized
 
 		//Si no podemos poner el fullscreen preguntamos que hacer
-		if (ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
+		if (LONG value = ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
 		{
+			WORD error = GetLastError();
 			if (MessageBox(NULL, "The resquest fullscreen mode is not supported by the video card. Use Windowed Instead?", "Kortax GL", MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
+			{
 				fullscreen = FALSE;
+			}
 			else
 			{
 				MessageBox(NULL, "Program will now close", "ERROR", MB_OK | MB_ICONEXCLAMATION);
@@ -369,7 +381,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 	}
 
 	//Create our window
-	if (!CreateGLWindow("Kortax first window", 640, 480, 16, fullscreen))
+	if (!CreateGLWindow("Kortax first window", 640, 480, 32, fullscreen))
 	{
 		DWORD error = GetLastError();
 		return 0;
@@ -406,7 +418,7 @@ int WINAPI WinMain( HINSTANCE hInstance,
 				KillGLWindow();						// Kill Our Current Window
 				fullscreen = !fullscreen;				// Toggle Fullscreen/Windowed Mode
 														// Recreate Our OpenGL Window
-				if (!CreateGLWindow("Kortax first window", 640, 480, 24, fullscreen))
+				if (!CreateGLWindow("Kortax first window", 640, 480, 32, fullscreen))
 				{
 					return 0;						// Quit If Window Was No Created
 				}
