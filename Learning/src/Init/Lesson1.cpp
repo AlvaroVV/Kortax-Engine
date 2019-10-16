@@ -15,6 +15,8 @@ bool keys[256];			//Array used for keyboard routine
 bool active = TRUE;		//Variable to control minimize
 bool fullscreen = TRUE; //Control fullscreen mode
 
+float rtri = 0.0f;
+float rquad = 0.0f;
 /*
 * Callback used to process the Windows' messages (user and OS)
 * @param hwnd, window handle
@@ -80,23 +82,33 @@ int DrawGLScene(GLvoid)
 	glLoadIdentity();
 
 	//Transformamos la matriz MODELVIEW, por lo que alejamos la escena en -z.
+	
 	glTranslatef(-1.5f, 0.0f, -6.0f);
+	glRotatef(rtri, 0.0f, 1.0f, 0.0f);
 	glBegin(GL_TRIANGLES);
+		glColor3f(1.0f, 0.0f, 0.0f);
 		glVertex3f(0.0f, 1.0f, 0.0f);
+		glColor3f(0.0f, 1.0f, 0.0f);
 		glVertex3f(-1.0f, -1.0f, 0.0f);
+		glColor3f(0.0f, 0.0f, 1.0f);
 		glVertex3f(1.0f, -1.0f, 0.0f);
 	glEnd();
 
-	//Aplicamos transformacion SOBRE la ya aplicada.
-	glTranslatef(3.0f, 0.0f, 0.0f);
+	glLoadIdentity();                   // Reset The Current Modelview Matrix
+	glTranslatef(1.5f, 0.0f, -6.0f);              // Move Right 1.5 Units And Into The Screen 6.0
+	glRotatef(rquad, 1.0f, 0.0f, 0.0f);
 
-	glBegin(GL_QUADS);                      // Draw A Quad
+	glBegin(GL_QUADS);  
+	// Draw A Quad
+	glColor3f(0.5f, 0.5f, 1.0f);
 	glVertex3f(-1.0f, 1.0f, 0.0f);              // Top Left
 	glVertex3f(1.0f, 1.0f, 0.0f);              // Top Right
 	glVertex3f(1.0f, -1.0f, 0.0f);              // Bottom Right
 	glVertex3f(-1.0f, -1.0f, 0.0f);              // Bottom Left
 	glEnd();                            // Done Drawing The Quad
-	//glTranslatef(3.0f, 0.0f, 0.0f);
+	
+	rtri += 0.2f;
+	rquad -= 0.15f;
 	return TRUE;
 }
 
