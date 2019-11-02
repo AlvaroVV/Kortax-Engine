@@ -1,10 +1,14 @@
 //#include "stdafx.h"
 
 #include <Windows.h>
+#include <stdio.h>
 #include <gl\GL.h>
 #include <gl\GLU.h>
 
+#include <png.h>
+#include <setjmp.h>
 
+//--------- OPENGL ---------
 HDC		hDC = NULL;		//Private GDI Device Context
 HGLRC	hRC = NULL;		//Permanent Rendering Context
 HWND	hWnd = NULL;	//Holds the Window Handle
@@ -17,6 +21,11 @@ bool fullscreen = TRUE; //Control fullscreen mode
 
 float rtri = 0.0f;
 float rquad = 0.0f;
+//----------------
+//----- PNG ------
+GLubyte texture;
+int width, height;
+//----------------
 /*
 * Callback used to process the Windows' messages (user and OS)
 * @param hwnd, window handle
@@ -25,6 +34,16 @@ float rquad = 0.0f;
 * @return LRESULT, integer value returned to Windows, the program response.
 */
 LRESULT CALLBACK WndProc(HWND , UINT , WPARAM , LPARAM );
+
+/*
+* Function which loads a png image using pnglib
+*/
+int LoadGLTextures(const char *file, int *width, int *height);
+
+//--- Exercises----------
+void Ex_shapesAndColors();
+void Ex_simpleTextureMapping();
+//-----------------------
 
 /*
 * @param GLsizei, non-negative binary integer, for sizes
@@ -36,7 +55,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 	{
 		height = 1;
 	}
-
+	
 	glViewport(0, 0, width, height);
 
 	//--perspective view---
@@ -57,6 +76,12 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 */
 int InitGL(GLvoid)
 {
+	if (!LoadGLTextures("bricks.png", &width, &height));
+	{
+		return FALSE;
+	}
+
+	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);	// Blends colors across polygons and smoothes out lighing
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);	//Sets the color when it clears
@@ -81,87 +106,8 @@ int DrawGLScene(GLvoid)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear screen and depth buffer
 	glLoadIdentity();
 
-	//Transformamos la matriz MODELVIEW, por lo que alejamos la escena en -z.
-	
-	glTranslatef(-1.5f, 0.0f, -6.0f); //Move MODELVIEW left and into screen
-	glRotatef(rtri, 0.0f, 1.0f, 0.0f); //Rotate the pyramid
-	glBegin(GL_TRIANGLES);
-	//FRONT
-		glColor3f(1.0f, 0.0f, 0.0f); //Red
-		glVertex3f(0.0f, 1.0f, 0.0f); //top
-		glColor3f(0.0f, 1.0f, 0.0f); // Green
-		glVertex3f(-1.0f, -1.0f, 1.0f); //Left
-		glColor3f(0.0f, 0.0f, 1.0f); //Blue
-		glVertex3f(1.0f, -1.0f, 1.0f); //Right
-	//RIGHT
-		glColor3f(1.0f, 0.0f, 0.0f); //Red
-		glVertex3f(0.0f, 1.0f, 0.0f); //top
-		glColor3f(0.0f, 0.0f, 1.0f); // Blue
-		glVertex3f(1.0f, -1.0f, 1.0f); //Left
-		glColor3f(0.0f, 1.0f, 0.0f); //Green
-		glVertex3f(1.0f, -1.0f, -1.0f); //Right
-	//BACK
-		glColor3f(1.0f, 0.0f, 0.0f); //Red
-		glVertex3f(0.0f, 1.0f, 0.0f); //top
-		glColor3f(0.0f, 1.0f, 0.0f); //Green
-		glVertex3f(1.0f, -1.0f, -1.0f); //Left
-		glColor3f(0.0f, 0.0f, 1.0f); //Blue
-		glVertex3f(-1.0f, -1.0f, -1.0f); //Right
-	//LEFT
-		glColor3f(1.0f, 0.0f, 0.0f); //Red
-		glVertex3f(0.0f, 1.0f, 0.0f); //top
-		glColor3f(0.0f, 0.0f, 1.0f); //Blue
-		glVertex3f(-1.0f, -1.0f, -1.0f); //Left
-		glColor3f(0.0f, 1.0f, 0.0f); // Green
-		glVertex3f(-1.0f, -1.0f, 1.0f); //Right
-	glEnd();
+	Ex_shapesAndColors();
 
-	glLoadIdentity();                   // Reset The Current Modelview Matrix
-	glTranslatef(1.5f, 0.0f, -7.0f);              // Move Right 1.5 Units And Into The Screen 6.0
-	glRotatef(rquad, 1.0f, 1.0f, 1.0f); //Rotate the cube in X,Y,Z
-
-	glBegin(GL_QUADS);  
-	// Draw A Quad
-	//TOP
-		glColor3f(0.0f, 1.0f, 0.0f); //Green
-		glVertex3f(1.0f, 1.0f, -1.0f);// Top Right
-		glVertex3f(-1.0f, 1.0f, -1.0f);// Top Left
-		glVertex3f(-1.0f, 1.0f, 1.0f);// Bottom Left
-		glVertex3f(1.0f, 1.0f, 1.0f);// Bottom RIght
-	//BOT
-		glColor3f(1.0f, 0.5f, 0.0f); //Orange
-		glVertex3f(1.0f, -1.0f, -1.0f);// Top Right
-		glVertex3f(-1.0f, -1.0f, -1.0f);// Top Left
-		glVertex3f(-1.0f, -1.0f, 1.0f);// Bottom Left
-		glVertex3f(1.0f, -1.0f, 1.0f);// Bottom Right
-	//FRONT
-		glColor3f(1.0f, 0.0f, 0.0f); //Red
-		glVertex3f(1.0f, 1.0f, 1.0f);// Top RIght
-		glVertex3f(-1.0f, 1.0f, 1.0f);// Top Left
-		glVertex3f(-1.0f, -1.0f, 1.0f);// Bottom Left
-		glVertex3f(1.0f, -1.0f, 1.0f);// Bottom Right
-	//BACK
-		glColor3f(1.0f, 1.0f, 0.0f); //Yellow
-		glVertex3f(1.0f, 1.0f, -1.0f);// Top Right
-		glVertex3f(-1.0f, 1.0f, -1.0f);// Top Left
-		glVertex3f(-1.0f, -1.0f, -1.0f);// Bottom Left
-		glVertex3f(1.0f, -1.0f, -1.0f);// Bottom Right
-	//RIGHT
-		glColor3f(0.0f, 0.0f, 1.0f); //Blue
-		glVertex3f(1.0f, 1.0f, -1.0f);// Top Left
-		glVertex3f(1.0f, 1.0f, 1.0f);// Top RIght
-		glVertex3f(1.0f, -1.0f, 1.0f);// Bottom Right
-		glVertex3f(1.0f, -1.0f, -1.0f);// Bottom Left
-	//LEFT
-		glColor3f(1.0f, 0.0f, 1.0f); //Violet
-		glVertex3f(-1.0f, 1.0f, -1.0f);// Top Left
-		glVertex3f(-1.0f, 1.0f, 1.0f);// Top RIght
-		glVertex3f(-1.0f, -1.0f, 1.0f);// Bottom Right
-		glVertex3f(-1.0f, -1.0f, -1.0f);// Bottom Left
-	glEnd();                            // Done Drawing The Quad
-	
-	rtri += 0.5f;
-	rquad -= 0.5f;
 	return TRUE;
 }
 
@@ -504,3 +450,268 @@ int WINAPI WinMain( HINSTANCE hInstance,
 	KillGLWindow();
 	return (msg.wParam);
 }
+
+
+//---------------- TEXTURE LOADER ------------------------
+
+int LoadGLTextures(const char *file, int *width, int *height)
+{
+	FILE *f;
+	int is_png, bit_depth, color_type, row_bytes, i;
+	png_infop info_ptr, end_info;
+	png_uint_32 t_width, t_height;
+	png_byte header[8], *image_data;
+	png_bytepp row_pointers;
+	png_structp png_ptr;
+	GLuint texture;
+	int alpha;
+
+	if (!(fopen_s(&f,file, "rb"))) {
+		return NULL;
+	}
+
+	//Lectura de la signatura de 8 bytes
+	fread(header, 1, 8, f);
+	is_png = !png_sig_cmp(header, 0, 8);
+	if (!is_png) {
+		fclose(f);
+		return NULL;
+	}
+
+	//Crear read struct
+	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,
+		NULL, NULL);
+	if (!png_ptr) {
+		fclose(f);
+		return NULL;
+	}
+
+	//Crear info struct
+	info_ptr = png_create_info_struct(png_ptr);
+	if (!info_ptr) {
+		png_destroy_read_struct(&png_ptr, (png_infopp)NULL,
+			(png_infopp)NULL);
+		fclose(f);
+		return NULL;
+	}
+	end_info = png_create_info_struct(png_ptr);
+	if (!end_info) {
+		png_destroy_read_struct(&png_ptr, (png_infopp)NULL,
+			(png_infopp)NULL);
+		fclose(f);
+		return NULL;
+	}
+	if (setjmp(png_jmpbuf(png_ptr))) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		fclose(f);
+		return NULL;
+	}
+	//Inicializamos input/output function
+	png_init_io(png_ptr, f);
+	//Ya leimos signatura
+	png_set_sig_bytes(png_ptr, 8);
+
+	//Leemos la información del png file
+	png_read_info(png_ptr, info_ptr);
+	//Chunk de información
+	png_get_IHDR(png_ptr, info_ptr, &t_width, &t_height, &bit_depth,
+		&color_type, NULL, NULL, NULL);
+	*width = t_width;
+	*height = t_height;
+	//Actualiza info_ptr para reflejar cualquier transformación.
+	png_read_update_info(png_ptr, info_ptr);
+	//número de bytes por fila
+	row_bytes = png_get_rowbytes(png_ptr, info_ptr);
+	//Espacio en image_data para almacenar los bytes de la imagen
+	image_data = (png_bytep)malloc(row_bytes * t_height * sizeof(png_byte));
+	if (!image_data) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		fclose(f);
+		return NULL;
+	}
+
+	//Almacenamos espacio igual al número de filas por el espacio de cada fila (punteros)
+	row_pointers = (png_bytepp)malloc(t_height * sizeof(png_bytep));
+	if (!row_pointers) {
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		free(image_data);
+		fclose(f);
+		return NULL;
+	}
+	//OpenGL lee de abajo arriba y de izquierda a derecha
+	for (i = 0; i < t_height; ++i) {
+		row_pointers[t_height - 1 - i] = image_data + i * row_bytes;
+	}
+	//Leemos la imagen y almacenamos los datos.
+	png_read_image(png_ptr, row_pointers);
+	switch (png_get_color_type(png_ptr, info_ptr)) {
+	case PNG_COLOR_TYPE_RGBA:
+		alpha = GL_RGBA;
+		break;
+	case PNG_COLOR_TYPE_RGB:
+		alpha = GL_RGB;
+		break;
+	default:
+		printf("Color type %d not supported!\n",
+			png_get_color_type(png_ptr, info_ptr));
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		return NULL;
+	}
+	//Creamos el texture object
+	glGenTextures(1, &texture);
+	//Bindeamos el texture object
+	glBindTexture(GL_TEXTURE_2D, texture);
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	//Cargamos la imagen
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, t_width, t_height, 0,
+		alpha, GL_UNSIGNED_BYTE, (GLvoid *)image_data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	//Liberamos espacio
+	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+	free(image_data);
+	free(row_pointers);
+	fclose(f);
+	return texture;
+}
+
+
+
+//-------EXAMPLES--------
+void Ex_shapesAndColors()
+{
+	//Transformamos la matriz MODELVIEW, por lo que alejamos la escena en -z.
+
+	glTranslatef(-1.5f, 0.0f, -6.0f); //Move MODELVIEW left and into screen
+	glRotatef(rtri, 0.0f, 1.0f, 0.0f); //Rotate the pyramid
+	glBegin(GL_TRIANGLES);
+	//FRONT
+	glColor3f(1.0f, 0.0f, 0.0f); //Red
+	glVertex3f(0.0f, 1.0f, 0.0f); //top
+	glColor3f(0.0f, 1.0f, 0.0f); // Green
+	glVertex3f(-1.0f, -1.0f, 1.0f); //Left
+	glColor3f(0.0f, 0.0f, 1.0f); //Blue
+	glVertex3f(1.0f, -1.0f, 1.0f); //Right
+								   //RIGHT
+	glColor3f(1.0f, 0.0f, 0.0f); //Red
+	glVertex3f(0.0f, 1.0f, 0.0f); //top
+	glColor3f(0.0f, 0.0f, 1.0f); // Blue
+	glVertex3f(1.0f, -1.0f, 1.0f); //Left
+	glColor3f(0.0f, 1.0f, 0.0f); //Green
+	glVertex3f(1.0f, -1.0f, -1.0f); //Right
+									//BACK
+	glColor3f(1.0f, 0.0f, 0.0f); //Red
+	glVertex3f(0.0f, 1.0f, 0.0f); //top
+	glColor3f(0.0f, 1.0f, 0.0f); //Green
+	glVertex3f(1.0f, -1.0f, -1.0f); //Left
+	glColor3f(0.0f, 0.0f, 1.0f); //Blue
+	glVertex3f(-1.0f, -1.0f, -1.0f); //Right
+									 //LEFT
+	glColor3f(1.0f, 0.0f, 0.0f); //Red
+	glVertex3f(0.0f, 1.0f, 0.0f); //top
+	glColor3f(0.0f, 0.0f, 1.0f); //Blue
+	glVertex3f(-1.0f, -1.0f, -1.0f); //Left
+	glColor3f(0.0f, 1.0f, 0.0f); // Green
+	glVertex3f(-1.0f, -1.0f, 1.0f); //Right
+	glEnd();
+
+	glLoadIdentity();                   // Reset The Current Modelview Matrix
+	glTranslatef(1.5f, 0.0f, -7.0f);              // Move Right 1.5 Units And Into The Screen 6.0
+	glRotatef(rquad, 1.0f, 1.0f, 1.0f); //Rotate the cube in X,Y,Z
+
+	glBegin(GL_QUADS);
+	// Draw A Quad
+	//TOP
+	glColor3f(0.0f, 1.0f, 0.0f); //Green
+	glVertex3f(1.0f, 1.0f, -1.0f);// Top Right
+	glVertex3f(-1.0f, 1.0f, -1.0f);// Top Left
+	glVertex3f(-1.0f, 1.0f, 1.0f);// Bottom Left
+	glVertex3f(1.0f, 1.0f, 1.0f);// Bottom RIght
+								 //BOT
+	glColor3f(1.0f, 0.5f, 0.0f); //Orange
+	glVertex3f(1.0f, -1.0f, -1.0f);// Top Right
+	glVertex3f(-1.0f, -1.0f, -1.0f);// Top Left
+	glVertex3f(-1.0f, -1.0f, 1.0f);// Bottom Left
+	glVertex3f(1.0f, -1.0f, 1.0f);// Bottom Right
+								  //FRONT
+	glColor3f(1.0f, 0.0f, 0.0f); //Red
+	glVertex3f(1.0f, 1.0f, 1.0f);// Top RIght
+	glVertex3f(-1.0f, 1.0f, 1.0f);// Top Left
+	glVertex3f(-1.0f, -1.0f, 1.0f);// Bottom Left
+	glVertex3f(1.0f, -1.0f, 1.0f);// Bottom Right
+								  //BACK
+	glColor3f(1.0f, 1.0f, 0.0f); //Yellow
+	glVertex3f(1.0f, 1.0f, -1.0f);// Top Right
+	glVertex3f(-1.0f, 1.0f, -1.0f);// Top Left
+	glVertex3f(-1.0f, -1.0f, -1.0f);// Bottom Left
+	glVertex3f(1.0f, -1.0f, -1.0f);// Bottom Right
+								   //RIGHT
+	glColor3f(0.0f, 0.0f, 1.0f); //Blue
+	glVertex3f(1.0f, 1.0f, -1.0f);// Top Left
+	glVertex3f(1.0f, 1.0f, 1.0f);// Top RIght
+	glVertex3f(1.0f, -1.0f, 1.0f);// Bottom Right
+	glVertex3f(1.0f, -1.0f, -1.0f);// Bottom Left
+								   //LEFT
+	glColor3f(1.0f, 0.0f, 1.0f); //Violet
+	glVertex3f(-1.0f, 1.0f, -1.0f);// Top Left
+	glVertex3f(-1.0f, 1.0f, 1.0f);// Top RIght
+	glVertex3f(-1.0f, -1.0f, 1.0f);// Bottom Right
+	glVertex3f(-1.0f, -1.0f, -1.0f);// Bottom Left
+	glEnd();                            // Done Drawing The Quad
+
+	rtri += 0.5f;
+	rquad -= 0.5f;
+}
+
+void Ex_simpleTextureMapping()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
+	glLoadIdentity();									// Reset The View
+	glTranslatef(0.0f, 0.0f, -5.0f);
+
+	//glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+	//glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+	//glRotatef(zrot, 0.0f, 0.0f, 1.0f);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glBegin(GL_QUADS);
+	// Front Face
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+	// Back Face
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, -1.0f);
+	// Top Face
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
+	// Bottom Face
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
+	// Right face
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(1.0f, -1.0f, 1.0f);
+	// Left Face
+	glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
+	glEnd();
+
+	//xrot += 0.3f;
+	//yrot += 0.2f;
+	//zrot += 0.4f;
+	
+}
+
