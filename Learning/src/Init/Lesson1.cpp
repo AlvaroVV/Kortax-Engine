@@ -23,7 +23,7 @@ float rtri = 0.0f;
 float rquad = 0.0f;
 //----------------
 //----- PNG ------
-GLubyte texture;
+GLuint tex;
 int width, height;
 //----------------
 /*
@@ -76,10 +76,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 */
 int InitGL(GLvoid)
 {
-	if (!LoadGLTextures("bricks.png", &width, &height));
-	{
-		return FALSE;
-	}
+	tex = LoadGLTextures("D:/Proyectos/GitHub/Kortax-Engine/resources/rgb.PNG", &width, &height);
 
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);	// Blends colors across polygons and smoothes out lighing
@@ -106,8 +103,8 @@ int DrawGLScene(GLvoid)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Clear screen and depth buffer
 	glLoadIdentity();
 
-	Ex_shapesAndColors();
-
+	//Ex_shapesAndColors();
+	Ex_simpleTextureMapping();
 	return TRUE;
 }
 
@@ -466,7 +463,9 @@ int LoadGLTextures(const char *file, int *width, int *height)
 	GLuint texture;
 	int alpha;
 
-	if (!(fopen_s(&f,file, "rb"))) {
+	fopen_s(&f, file, "rb");
+	WORD error = GetLastError();
+	if (f == NULL) {
 		return NULL;
 	}
 
@@ -538,7 +537,8 @@ int LoadGLTextures(const char *file, int *width, int *height)
 		fclose(f);
 		return NULL;
 	}
-	//OpenGL lee de abajo arriba y de izquierda a derecha
+	//OpenGL lee de abajo arriba y de izquierda a derecha.
+	//RowPointers pasa almacena las direcciones de image_data y las rellena con el png_read_image por tanto rellena image_data de forma ordenada.
 	for (i = 0; i < t_height; ++i) {
 		row_pointers[t_height - 1 - i] = image_data + i * row_bytes;
 	}
@@ -664,17 +664,21 @@ void Ex_shapesAndColors()
 	rquad -= 0.5f;
 }
 
+GLfloat	xrot;			
+GLfloat	yrot;				
+GLfloat	zrot;				
+
 void Ex_simpleTextureMapping()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 	glLoadIdentity();									// Reset The View
 	glTranslatef(0.0f, 0.0f, -5.0f);
 
-	//glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-	//glRotatef(yrot, 0.0f, 1.0f, 0.0f);
-	//glRotatef(zrot, 0.0f, 0.0f, 1.0f);
+	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
+	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+	glRotatef(zrot, 0.0f, 0.0f, 1.0f);
 
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, tex);
 
 	glBegin(GL_QUADS);
 	// Front Face
@@ -709,9 +713,9 @@ void Ex_simpleTextureMapping()
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
 	glEnd();
 
-	//xrot += 0.3f;
-	//yrot += 0.2f;
-	//zrot += 0.4f;
+	xrot += 0.3f;
+	yrot += 0.2f;
+	zrot += 0.4f;
 	
 }
 
