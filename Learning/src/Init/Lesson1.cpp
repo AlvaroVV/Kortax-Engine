@@ -76,7 +76,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 */
 int InitGL(GLvoid)
 {
-	tex = LoadGLTextures("D:/Proyectos/GitHub/Kortax-Engine/resources/rgb.PNG", &width, &height);
+	tex = LoadGLTextures("F:/Users/alvaro.velazquez/Proyectos/Kortax-Engine/resources/rgb.PNG", &width, &height);
 
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);	// Blends colors across polygons and smoothes out lighing
@@ -563,7 +563,18 @@ int LoadGLTextures(const char *file, int *width, int *height)
 	glBindTexture(GL_TEXTURE_2D, texture);
 	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	//Cargamos la imagen
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, t_width, t_height, 0,
+	int align;
+	if (!(t_width & 3)) {
+		align = 4;
+	}
+	else if (!t_width & 1) {
+		align = 2;
+	}
+	else {
+		align = 1;
+	}
+	glPixelStorei(GL_UNPACK_ALIGNMENT, align);
+	glTexImage2D(GL_TEXTURE_2D, 0, alpha, t_width, t_height, 0,
 		alpha, GL_UNSIGNED_BYTE, (GLvoid *)image_data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
