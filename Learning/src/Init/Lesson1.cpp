@@ -561,7 +561,7 @@ int LoadGLTextures(const char *file, int *width, int *height)
 	glGenTextures(1, &texture);
 	//Bindeamos el texture object
 	glBindTexture(GL_TEXTURE_2D, texture);
-	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	//Cargamos la imagen
 	int align;
 	if (!(t_width & 3)) {
