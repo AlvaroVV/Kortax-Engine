@@ -1,12 +1,12 @@
 //#include "stdafx.h"
 
 #include <Windows.h>
-#include <stdio.h>
 #include <gl\GL.h>
 #include <gl\GLU.h>
 
-#include <png.h>
-#include <setjmp.h>
+#include "..\utils\PngResolver.h"
+
+
 
 //--------- OPENGL ---------
 HDC		hDC = NULL;		//Private GDI Device Context
@@ -23,8 +23,7 @@ float rtri = 0.0f;
 float rquad = 0.0f;
 //----------------
 //----- PNG ------
-GLuint tex;
-int width, height;
+GLuint texture;
 //----------------
 /*
 * Callback used to process the Windows' messages (user and OS)
@@ -35,15 +34,14 @@ int width, height;
 */
 LRESULT CALLBACK WndProc(HWND , UINT , WPARAM , LPARAM );
 
-/*
-* Function which loads a png image using pnglib
-*/
-int LoadGLTextures(const char *file, int *width, int *height);
-
 //--- Exercises----------
 void Ex_shapesAndColors();
 void Ex_simpleTextureMapping();
 //-----------------------
+
+
+//----- PNG -----
+GLuint LoadPNGTexture(const char* fileName);
 
 /*
 * @param GLsizei, non-negative binary integer, for sizes
@@ -76,7 +74,7 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 */
 int InitGL(GLvoid)
 {
-	tex = LoadGLTextures("D:/Proyectos/GitHub/Kortax-Engine/resources/rgb.PNG", &width, &height);
+	texture = LoadPNGTexture("D:/Proyectos/GitHub/Kortax-Engine/resources/bricks.PNG");
 
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);	// Blends colors across polygons and smoothes out lighing
@@ -206,7 +204,7 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 		//Si no podemos poner el fullscreen preguntamos que hacer
 		if (LONG value = ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
 		{
-			WORD error = GetLastError();
+			DWORD error = GetLastError();
 			if (MessageBox(NULL, "The resquest fullscreen mode is not supported by the video card. Use Windowed Instead?", "Kortax GL", MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
 			{
 				fullscreen = FALSE;
@@ -448,134 +446,55 @@ int WINAPI WinMain( HINSTANCE hInstance,
 	return (msg.wParam);
 }
 
-
-//---------------- TEXTURE LOADER ------------------------
-
-int LoadGLTextures(const char *file, int *width, int *height)
+GLuint LoadPNGTexture(const char* fileName)
 {
-	FILE *f;
-	int is_png, bit_depth, color_type, row_bytes, i;
-	png_infop info_ptr, end_info;
-	png_uint_32 t_width, t_height;
-	png_byte header[8], *image_data;
-	png_bytepp row_pointers;
-	png_structp png_ptr;
-	GLuint texture;
-	int alpha;
+	GLuint tex;
+	PNG::pngInfo info;
+	PNG::LoadPNG(fileName, info);
+	int format = 0;
 
-	fopen_s(&f, file, "rb");
-	WORD error = GetLastError();
-	if (f == NULL) {
-		return NULL;
-	}
+	if (!info.data)
+		return 0;
 
-	//Lectura de la signatura de 8 bytes
-	fread(header, 1, 8, f);
-	is_png = !png_sig_cmp(header, 0, 8);
-	if (!is_png) {
-		fclose(f);
-		return NULL;
+	switch (info.format) {
+		case PNG_COLOR_TYPE_RGBA:
+			format = GL_RGBA;
+			break;
+		case PNG_COLOR_TYPE_RGB:
+			format = GL_RGB;
+			break;
+		default:
+			printf("Color type %d not supported!\n",
+				info.format);
+			return false;
 	}
 
-	//Crear read struct
-	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,
-		NULL, NULL);
-	if (!png_ptr) {
-		fclose(f);
-		return NULL;
-	}
-
-	//Crear info struct
-	info_ptr = png_create_info_struct(png_ptr);
-	if (!info_ptr) {
-		png_destroy_read_struct(&png_ptr, (png_infopp)NULL,
-			(png_infopp)NULL);
-		fclose(f);
-		return NULL;
-	}
-	end_info = png_create_info_struct(png_ptr);
-	if (!end_info) {
-		png_destroy_read_struct(&png_ptr, (png_infopp)NULL,
-			(png_infopp)NULL);
-		fclose(f);
-		return NULL;
-	}
-	if (setjmp(png_jmpbuf(png_ptr))) {
-		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-		fclose(f);
-		return NULL;
-	}
-	//Inicializamos input/output function
-	png_init_io(png_ptr, f);
-	//Ya leimos signatura
-	png_set_sig_bytes(png_ptr, 8);
-
-	//Leemos la información del png file
-	png_read_info(png_ptr, info_ptr);
-	//Chunk de información
-	png_get_IHDR(png_ptr, info_ptr, &t_width, &t_height, &bit_depth,
-		&color_type, NULL, NULL, NULL);
-	*width = t_width;
-	*height = t_height;
-	//Actualiza info_ptr para reflejar cualquier transformación.
-	png_read_update_info(png_ptr, info_ptr);
-	//número de bytes por fila
-	row_bytes = png_get_rowbytes(png_ptr, info_ptr);
-	//Espacio en image_data para almacenar los bytes de la imagen
-	image_data = (png_bytep)malloc(row_bytes * t_height * sizeof(png_byte));
-	if (!image_data) {
-		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-		fclose(f);
-		return NULL;
-	}
-
-	//Almacenamos espacio igual al número de filas por el espacio de cada fila (punteros)
-	row_pointers = (png_bytepp)malloc(t_height * sizeof(png_bytep));
-	if (!row_pointers) {
-		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-		free(image_data);
-		fclose(f);
-		return NULL;
-	}
-	//OpenGL lee de abajo arriba y de izquierda a derecha.
-	//RowPointers pasa almacena las direcciones de image_data y las rellena con el png_read_image por tanto rellena image_data de forma ordenada.
-	for (i = 0; i < t_height; ++i) {
-		row_pointers[t_height - 1 - i] = image_data + i * row_bytes;
-	}
-	//Leemos la imagen y almacenamos los datos.
-	png_read_image(png_ptr, row_pointers);
-	switch (png_get_color_type(png_ptr, info_ptr)) {
-	case PNG_COLOR_TYPE_RGBA:
-		alpha = GL_RGBA;
-		break;
-	case PNG_COLOR_TYPE_RGB:
-		alpha = GL_RGB;
-		break;
-	default:
-		printf("Color type %d not supported!\n",
-			png_get_color_type(png_ptr, info_ptr));
-		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-		return NULL;
-	}
-	//Creamos el texture object
-	glGenTextures(1, &texture);
+	glGenTextures(1, &tex);
 	//Bindeamos el texture object
-	glBindTexture(GL_TEXTURE_2D, texture);
-	//glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+	glBindTexture(GL_TEXTURE_2D, tex);
+
+	int align;
+	if (!(info.width & 3)) {
+		align = 4;
+	}
+	else if (!info.width & 1) {
+		align = 2;
+	}
+	else {
+		align = 1;
+	}
+	glPixelStorei(GL_UNPACK_ALIGNMENT, align);
 	//Cargamos la imagen
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, t_width, t_height, 0,
-		alpha, GL_UNSIGNED_BYTE, (GLvoid *)image_data);
+	glTexImage2D(GL_TEXTURE_2D, 0, format, info.width, info.height, 0,
+		format, GL_UNSIGNED_BYTE, (GLvoid *)info.data);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
+	
 	//Liberamos espacio
-	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-	free(image_data);
-	free(row_pointers);
-	fclose(f);
-	return texture;
+	free(info.data);
+	
+	return tex;
 }
-
 
 
 //-------EXAMPLES--------
@@ -678,7 +597,7 @@ void Ex_simpleTextureMapping()
 	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
 	glRotatef(zrot, 0.0f, 0.0f, 1.0f);
 
-	glBindTexture(GL_TEXTURE_2D, tex);
+	glBindTexture(GL_TEXTURE_2D, texture);
 
 	glBegin(GL_QUADS);
 	// Front Face
