@@ -4,7 +4,7 @@
 #include <gl\GLU.h>
 
 //---------- Examples-------------
-//#include "Examples\ShapeAndColors.h"
+#include "Examples\ShapeAndColors.h"
 #include "Examples\SimpleTexture.h"
 
 
@@ -67,6 +67,7 @@ int InitGL(GLvoid)
 
 	glProgram->Init();
 
+	//Gestion de errores
 	return TRUE;	//Everything OK
 }
 
@@ -76,6 +77,8 @@ int InitGL(GLvoid)
 int DrawGLScene(GLvoid)
 {
 	glProgram->Draw();
+	//Gestion de errores
+
 	return TRUE;
 }
 
@@ -161,6 +164,9 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	wc.hbrBackground = NULL;	//No Background required for GL
 	wc.lpszMenuName = NULL;		// No menu
 	wc.lpszClassName = "OpenGL";	//Set the Class name
+
+	//Creamos el programa ---- AQUI??
+	glProgram = new SimpleTexture();
 
 	if (!RegisterClass(&wc))
 	{
@@ -367,8 +373,6 @@ int WINAPI WinMain( HINSTANCE hInstance,
 {
 	MSG msg;	//Windows Message Structure
 	BOOL done = FALSE; //Bool variable to exit
-
-	glProgram = new SimpleTexture();
 
 	if (MessageBox(NULL, "Would you like to run it in fullscreen?", "Start Fullscreen?", MB_YESNO | MB_ICONQUESTION) == IDNO)
 	{

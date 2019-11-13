@@ -4,26 +4,7 @@
 
 
 
-void GLProgram::Init()
-{
-	glEnable(GL_TEXTURE_2D);
-	glShadeModel(GL_SMOOTH);	// Blends colors across polygons and smoothes out lighing
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.5f);	//Sets the color when it clears
-
-											//--- Depth Buffer ---
-	glClearDepth(1.0f);
-	glEnable(GL_DEPTH_TEST); //Enables depth testing
-	glDepthFunc(GL_LEQUAL);	// Type of depth test
-							// ----------
-
-							//Perspective correction
-	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); //Nice perspective calculations
-}
-
-void GLProgram::Draw()
-{
-}
 
 
 GLuint GLProgram::LoadPNGTexture(const char* fileName)

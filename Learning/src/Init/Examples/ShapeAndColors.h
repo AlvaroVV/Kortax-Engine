@@ -9,6 +9,7 @@ private:
 	float rquad = 0.0f;
 
 public:
+	void Init() override;
 	void Draw() override;
 
 };
