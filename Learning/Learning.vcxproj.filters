@@ -27,6 +27,9 @@
     <ClInclude Include="src\Init\Examples\SimpleTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Init\Examples\SimpleLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Init\Lesson1.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Init\Examples\ShapeAndColors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Init\Examples\SimpleLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,10 +7,13 @@
 class GLProgram
 {
 public:
-	virtual void Init() = 0;
-	virtual void Draw() = 0;
+	virtual void init() = 0;
+	virtual void draw() = 0;
+
+	//TODO: Ahora mismo virtual pura no se puede. Crear un método virtual vacío de momento y mantener lo comun (Escape y F1) en el main. Context/Window?
+	virtual void processInput(bool* keys);
 
 protected:
-	GLuint LoadPNGTexture(const char* fileName);
+	GLuint _loadPNGTexture(const char* fileName);
 };
 

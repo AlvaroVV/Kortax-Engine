@@ -1,8 +1,8 @@
 #include "SimpleTexture.h"
 
-void SimpleTexture::Init()
+void SimpleTexture::init()
 {
-	texture = LoadPNGTexture("D:/Proyectos/GitHub/Kortax-Engine/resources/bricks.PNG");
+	texture = _loadPNGTexture("D:/Proyectos/GitHub/Kortax-Engine/resources/bricks.PNG");
 
 	glEnable(GL_TEXTURE_2D);
 	glShadeModel(GL_SMOOTH);	// Blends colors across polygons and smoothes out lighing
@@ -18,7 +18,7 @@ void SimpleTexture::Init()
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST); //Nice perspective calculations
 }
 
-void SimpleTexture::Draw()
+void SimpleTexture::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 	glLoadIdentity();									// Reset The View

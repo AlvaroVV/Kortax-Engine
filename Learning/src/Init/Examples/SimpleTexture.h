@@ -11,6 +11,6 @@ private:
 
 	GLuint texture;
 public:
-	void Init() override;
-	void Draw() override;
+	void init() override;
+	void draw() override;
 };

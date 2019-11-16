@@ -2,7 +2,7 @@
 #include "ShapeAndColors.h"
 
 
-void ShapeAndColors::Init()
+void ShapeAndColors::init()
 {
 	glShadeModel(GL_SMOOTH);	// Blends colors across polygons and smoothes out lighing
 
@@ -18,7 +18,7 @@ void ShapeAndColors::Init()
 
 }
 
-void ShapeAndColors::Draw()
+void ShapeAndColors::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	// Clear The Screen And The Depth Buffer
 	glLoadIdentity();

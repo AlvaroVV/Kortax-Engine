@@ -2,10 +2,13 @@
 #include <Windows.h>
 #include <gl\GL.h>
 #include <gl\GLU.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 //---------- Examples-------------
 #include "Examples\ShapeAndColors.h"
 #include "Examples\SimpleTexture.h"
+#include "Examples\SimpleLight.h"
 
 
 
@@ -65,9 +68,9 @@ GLvoid ReSizeGLScene(GLsizei width, GLsizei height)
 int InitGL(GLvoid)
 {
 
-	glProgram->Init();
+	glProgram->init();
 
-	//Gestion de errores
+	//GESTION ERRORES
 	return TRUE;	//Everything OK
 }
 
@@ -76,8 +79,8 @@ int InitGL(GLvoid)
 */
 int DrawGLScene(GLvoid)
 {
-	glProgram->Draw();
-	//Gestion de errores
+	glProgram->draw();
+	//GESTION ERRORES
 
 	return TRUE;
 }
@@ -166,7 +169,7 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	wc.lpszClassName = "OpenGL";	//Set the Class name
 
 	//Creamos el programa ---- AQUI??
-	glProgram = new SimpleTexture();
+	glProgram = new SimpleLight();
 
 	if (!RegisterClass(&wc))
 	{
@@ -373,6 +376,10 @@ int WINAPI WinMain( HINSTANCE hInstance,
 {
 	MSG msg;	//Windows Message Structure
 	BOOL done = FALSE; //Bool variable to exit
+	FILE* debugStrem;
+	AllocConsole();
+	AttachConsole(GetCurrentProcessId());
+	freopen_s(&debugStrem, "CON", "w", stdout);
 
 	if (MessageBox(NULL, "Would you like to run it in fullscreen?", "Start Fullscreen?", MB_YESNO | MB_ICONQUESTION) == IDNO)
 	{
@@ -408,20 +415,24 @@ int WINAPI WinMain( HINSTANCE hInstance,
 				{
 					DrawGLScene();
 					SwapBuffers(hDC);
+
+					if (keys[VK_F1]) // Is F1 Being Pressed?
+					{
+						keys[VK_F1] = FALSE; // If So Make Key FALSE
+						KillGLWindow();	// Kill Our Current Window
+						fullscreen = !fullscreen;// Toggle Fullscreen/Windowed Mode 
+
+						// Recreate Our OpenGL Window
+						if (!CreateGLWindow("Kortax first window", 640, 480, 32, fullscreen))
+						{
+							return 0;// Quit If Window Was No Created
+						}
+					}
+
+					glProgram->processInput(keys);
 				}
 			}
 
-			if (keys[VK_F1])						// Is F1 Being Pressed?
-			{
-				keys[VK_F1] = FALSE;					// If So Make Key FALSE
-				KillGLWindow();						// Kill Our Current Window
-				fullscreen = !fullscreen;				// Toggle Fullscreen/Windowed Mode
-														// Recreate Our OpenGL Window
-				if (!CreateGLWindow("Kortax first window", 640, 480, 32, fullscreen))
-				{
-					return 0;						// Quit If Window Was No Created
-				}
-			}
 		}
 	}
 

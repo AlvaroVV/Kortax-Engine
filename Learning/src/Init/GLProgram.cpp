@@ -4,10 +4,7 @@
 
 
 
-
-
-
-GLuint GLProgram::LoadPNGTexture(const char* fileName)
+GLuint GLProgram::_loadPNGTexture(const char* fileName)
 {
 	GLuint tex;
 	PNG::pngInfo info;
@@ -55,5 +52,10 @@ GLuint GLProgram::LoadPNGTexture(const char* fileName)
 	free(info.data);
 
 	return tex;
+}
+
+void GLProgram::processInput(bool* keys)
+{
+
 }
 

@@ -158,12 +158,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Init\Examples\SimpleLight.h" />
     <ClInclude Include="src\Init\Examples\ShapeAndColors.h" />
     <ClInclude Include="src\Init\Examples\SimpleTexture.h" />
     <ClInclude Include="src\Init\GLProgram.h" />
     <ClInclude Include="src\utils\PngResolver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Init\Examples\SimpleLight.cpp" />
     <ClCompile Include="src\Init\Examples\ShapeAndColors.cpp" />
     <ClCompile Include="src\Init\GLProgram.cpp" />
     <ClCompile Include="src\Init\Examples\SimpleTexture.cpp" />
