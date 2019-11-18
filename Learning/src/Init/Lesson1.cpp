@@ -9,6 +9,7 @@
 #include "Examples\ShapeAndColors.h"
 #include "Examples\SimpleTexture.h"
 #include "Examples\SimpleLight.h"
+#include "Examples\Blending.h"
 
 
 
@@ -159,7 +160,8 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	hInstance = GetModuleHandle(NULL); //Grab an Instance for our Window
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC; //Redraw on move and own DC.
 	wc.lpfnWndProc = (WNDPROC)WndProc;
-	wc.cbClsExtra = 0;	//Extra data
+	wc.cbClsExtra = 0;	//Extra data 
+
 	wc.cbWndExtra = 0;	//Extra data
 	wc.hInstance = hInstance;	//The instance
 	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);	//Default Icon
@@ -169,7 +171,7 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	wc.lpszClassName = "OpenGL";	//Set the Class name
 
 	//Creamos el programa ---- AQUI??
-	glProgram = new SimpleLight();
+	glProgram = new Blending();
 
 	if (!RegisterClass(&wc))
 	{
