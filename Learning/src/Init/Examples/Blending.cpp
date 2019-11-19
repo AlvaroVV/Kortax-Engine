@@ -18,7 +18,7 @@ void Blending::init()
 	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);            
 	glEnable(GL_LIGHT1);
 
-	glColor4f(1.0f, 1.0f, 1.0f, 0.5f);         // Full Brightness, 50% Alpha 
+	//glColor4f(1.0f, 1.0f, 1.0f, 0.5f);         // Full Brightness, 50% Alpha 
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);       // Blending Function For Translucency Based On Source Alpha Value 
 }
 
@@ -81,7 +81,7 @@ void Blending::_loadTextures()
 {
 
 	PNG::pngInfo info;
-	PNG::LoadPNG("D:/Proyectos/GitHub/Kortax-Engine/resources/bricks.PNG", info);
+	PNG::LoadPNG("D:/Proyectos/GitHub/Kortax-Engine/resources/circle.png", info);
 	int format = 0;
 
 	switch (info.format) {
@@ -189,12 +189,12 @@ void Blending::processInput(bool* keys)
 		if (blend)               // Is blend TRUE?
 		{
 			glEnable(GL_BLEND);     // Turn Blending On
-			glDisable(GL_DEPTH_TEST);   // Turn Depth Testing Off
+			//glDisable(GL_DEPTH_TEST);   // Turn Depth Testing Off
 		}
 		else                    // Otherwise
 		{
 			glDisable(GL_BLEND);        // Turn Blending Off
-			glEnable(GL_DEPTH_TEST);    // Turn Depth Testing On
+			//glEnable(GL_DEPTH_TEST);    // Turn Depth Testing On
 		}
 		printf("Blending Changed -> %i \n", blend);
 	}
