@@ -10,6 +10,7 @@
 #include "Examples\SimpleTexture.h"
 #include "Examples\SimpleLight.h"
 #include "Examples\Blending.h"
+#include "Examples\MovingStars.h"
 
 
 
@@ -171,7 +172,7 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	wc.lpszClassName = "OpenGL";	//Set the Class name
 
 	//Creamos el programa ---- AQUI??
-	glProgram = new Blending();
+	glProgram = new MovingStars();
 
 	if (!RegisterClass(&wc))
 	{

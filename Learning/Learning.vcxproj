@@ -159,6 +159,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Init\Examples\Blending.h" />
+    <ClInclude Include="src\Init\Examples\MovingStars.h" />
     <ClInclude Include="src\Init\Examples\SimpleLight.h" />
     <ClInclude Include="src\Init\Examples\ShapeAndColors.h" />
     <ClInclude Include="src\Init\Examples\SimpleTexture.h" />
@@ -167,6 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Init\Examples\Blending.cpp" />
+    <ClCompile Include="src\Init\Examples\MovingStars.cpp" />
     <ClCompile Include="src\Init\Examples\SimpleLight.cpp" />
     <ClCompile Include="src\Init\Examples\ShapeAndColors.cpp" />
     <ClCompile Include="src\Init\GLProgram.cpp" />
