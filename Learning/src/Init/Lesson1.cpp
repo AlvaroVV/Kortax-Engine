@@ -11,6 +11,10 @@
 #include "Examples\SimpleLight.h"
 #include "Examples\Blending.h"
 #include "Examples\MovingStars.h"
+#include "Examples\WorldExample.h"
+#include "Examples\DisplayList.h"
+#include "Examples\PlaneView.h"
+#include "Examples\Robot.h"
 
 
 
@@ -172,7 +176,7 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	wc.lpszClassName = "OpenGL";	//Set the Class name
 
 	//Creamos el programa ---- AQUI??
-	glProgram = new MovingStars();
+	glProgram = new Robot();
 
 	if (!RegisterClass(&wc))
 	{

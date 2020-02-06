@@ -36,6 +36,18 @@
     <ClInclude Include="src\Init\Examples\MovingStars.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Init\Examples\WorldExample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Init\Examples\DisplayList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Init\Examples\PlaneView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Init\Examples\Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Init\Lesson1.cpp">
@@ -60,6 +72,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Init\Examples\MovingStars.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Init\Examples\WorldExample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Init\Examples\DisplayList.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Init\Examples\PlaneView.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Init\Examples\Robot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

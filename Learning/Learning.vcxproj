@@ -158,6 +158,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Init\Examples\Robot.h" />
+    <ClInclude Include="src\Init\Examples\PlaneView.h" />
+    <ClInclude Include="src\Init\Examples\DisplayList.h" />
+    <ClInclude Include="src\Init\Examples\WorldExample.h" />
     <ClInclude Include="src\Init\Examples\Blending.h" />
     <ClInclude Include="src\Init\Examples\MovingStars.h" />
     <ClInclude Include="src\Init\Examples\SimpleLight.h" />
@@ -167,6 +171,10 @@
     <ClInclude Include="src\utils\PngResolver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Init\Examples\Robot.cpp" />
+    <ClCompile Include="src\Init\Examples\PlaneView.cpp" />
+    <ClCompile Include="src\Init\Examples\DisplayList.cpp" />
+    <ClCompile Include="src\Init\Examples\WorldExample.cpp" />
     <ClCompile Include="src\Init\Examples\Blending.cpp" />
     <ClCompile Include="src\Init\Examples\MovingStars.cpp" />
     <ClCompile Include="src\Init\Examples\SimpleLight.cpp" />

@@ -1,6 +1,6 @@
 #include "PngResolver.h"
 
-#include <Windows.h>
+//#include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <setjmp.h>

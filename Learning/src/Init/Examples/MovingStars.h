@@ -5,7 +5,7 @@ class MovingStars: public GLProgram
 {
 private:
 
-	static const int  NUM = 5;
+	static const int  NUM = 3;
 	
 	BOOL    twinkle;   // Twinkling Stars
 	BOOL    tp;        // 'T' Key Pressed?
@@ -21,9 +21,10 @@ private:
 
 	GLfloat zoom = -15.0f;  // Viewing Distance Away From Stars
 	GLfloat tilt = 90.0f;  // Tilt The View
+	GLfloat yspeed = 0.0f;
 	GLfloat spin;          // Spin Twinkling Stars
 
-	GLuint  loop;          // General Loop Variable
+	GLuint  loop = 0;          // General Loop Variable
 	GLuint  texture[1];    // Storage For One Texture
 
 public:
