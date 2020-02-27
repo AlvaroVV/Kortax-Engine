@@ -15,7 +15,7 @@
 #include "Examples\DisplayList.h"
 #include "Examples\PlaneView.h"
 #include "Examples\Robot.h"
-
+#include "Examples\Transparency.h"
 
 
 //--------- OPENGL ---------
@@ -176,7 +176,7 @@ BOOL CreateGLWindow(const char* title, int width, int height, int bits, bool ful
 	wc.lpszClassName = "OpenGL";	//Set the Class name
 
 	//Creamos el programa ---- AQUI??
-	glProgram = new Robot();
+	glProgram = new Transparency();
 
 	if (!RegisterClass(&wc))
 	{

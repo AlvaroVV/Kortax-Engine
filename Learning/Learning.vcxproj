@@ -169,6 +169,7 @@
     <ClInclude Include="src\Init\Examples\SimpleTexture.h" />
     <ClInclude Include="src\Init\GLProgram.h" />
     <ClInclude Include="src\utils\PngResolver.h" />
+    <ClInclude Include="src\Init\Examples\Transparency.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Init\Examples\Robot.cpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="src\Init\Examples\SimpleTexture.cpp" />
     <ClCompile Include="src\Init\Lesson1.cpp" />
     <ClCompile Include="src\utils\PngResolver.cpp" />
+    <ClCompile Include="src\Init\Examples\Transparency.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Init\bricks.png" />
