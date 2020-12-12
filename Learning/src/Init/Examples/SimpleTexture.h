@@ -5,8 +5,8 @@
 class SimpleTexture : public GLProgram
 {
 private:
-	GLfloat	xrot;
-	GLfloat	yrot;
+	GLfloat	m_xrot;
+	GLfloat	m_yrot;
 	GLfloat	zrot;
 
 	GLuint texture;

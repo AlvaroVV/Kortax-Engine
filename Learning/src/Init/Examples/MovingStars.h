@@ -21,7 +21,7 @@ private:
 
 	GLfloat zoom = -15.0f;  // Viewing Distance Away From Stars
 	GLfloat tilt = 90.0f;  // Tilt The View
-	GLfloat yspeed = 0.0f;
+	GLfloat m_yspeed = 0.0f;
 	GLfloat spin;          // Spin Twinkling Stars
 
 	GLuint  loop = 0;          // General Loop Variable
@@ -30,6 +30,6 @@ private:
 public:
 	void init() override;
 	void draw() override;
-	void processInput(bool* keys) override;
+	void processInput(bool* keys, int mouseX, int mouseY) override;
 
 };

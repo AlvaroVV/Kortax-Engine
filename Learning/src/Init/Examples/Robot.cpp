@@ -27,11 +27,8 @@ void Robot::draw()
 	glFlush();
 }
 
-void Robot::processInput(bool * keys)
-{
-}
 
-GLvoid Robot::DrawCube(float xPos, float yPos, float zPos)
+GLvoid Robot::_drawCube(float xPos, float yPos, float zPos)
 {
 	glPushMatrix();
 
@@ -79,7 +76,7 @@ void Robot::DrawArm(float xPos, float yPos, float zPos)
 		glColor3f(1.0f, 0.0f, 0.0f);
 		glTranslatef(xPos, yPos, zPos);
 		glScalef(1.0,4.0,1.0);
-		DrawCube(0.0f, 0.0f, 0.0f);
+		_drawCube(0.0f, 0.0f, 0.0f);
 	glPopMatrix();
 }
 
@@ -89,7 +86,7 @@ void Robot::DrawHead(float xPos, float yPos, float zPos)
 		glColor3f(1.0f, 1.0f, 1.0f);
 		glTranslatef(xPos, yPos, zPos);
 		glScalef(2.0, 2.0, 2.0);
-		DrawCube(0.0f, 0.0f, 0.0f);
+		_drawCube(0.0f, 0.0f, 0.0f);
 	glPopMatrix();
 }
 
@@ -99,7 +96,7 @@ void Robot::DrawLeg(float xPos, float yPos, float zPos)
 		glColor3f(1.0f, 1.0f, 0.0f);
 		glTranslatef(xPos, yPos, zPos);
 		glScalef(1.0, 5.0, 1.0);
-		DrawCube(0.0f, 0.0f, 0.0f);
+		_drawCube(0.0f, 0.0f, 0.0f);
 	glPopMatrix();
 }
 
@@ -109,7 +106,7 @@ void Robot::DrawBody(float xPos, float yPos, float zPos)
 		glColor3f(0.0f, 0.0f, 1.0f);
 		glTranslatef(xPos, yPos, zPos);
 		glScalef(3.0, 5.0, 2.0);
-		DrawCube(0.0f, 0.0f, 0.0f);
+		_drawCube(0.0f, 0.0f, 0.0f);
 	glPopMatrix();
 }
 

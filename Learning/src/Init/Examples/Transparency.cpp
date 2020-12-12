@@ -40,14 +40,14 @@ void Transparency::draw()
 	glPushMatrix();
 		glColor3f(1.0f,1.0f,0.0f);
 		glTranslatef(ballPosition[0], ballPosition[1], ballPosition[2]);
-		DrawCube(0.0f,0.0f,0.0f);
+		_drawCube(0.0f,0.0f,0.0f);
 	glPopMatrix();
 
 	glPushMatrix();
 		glRotatef( angle, 0.0f, 1.0f, 0.0f);
 		glTranslatef(0.0f, 0.0f, 6.0f);
 		glColor4f(1.0f, 0.2f, 0.2f, 1.0f);
-		DrawCube(0.0f, 0.0f, 0.0f);
+		_drawCube(0.0f, 0.0f, 0.0f);
 	glPopMatrix();
 
 	glEnable(GL_BLEND);
@@ -61,7 +61,7 @@ void Transparency::draw()
 		glTranslatef(0.0f, 0.0f, -6.0f);
 		glColor4f(0.0f, 0.5f, 0.5f, 0.3f);
 		glScalef(2.0f, 2.0f, 2.0f);
-		DrawCube(0.0f, 0.0f, 0.0f);
+		_drawCube(0.0f, 0.0f, 0.0f);
 	glPopMatrix();
 
 	glDepthMask(GL_TRUE);
@@ -69,17 +69,14 @@ void Transparency::draw()
 	glDisable(GL_BLEND);
 }
 
-void Transparency::processInput(bool * keys)
-{
-}
 
-GLvoid Transparency::DrawCube(float xPos, float yPos, float zPos)
+GLvoid Transparency::_drawCube(float xPos, float yPos, float zPos)
 {
 	glPushMatrix();
 
 	glTranslatef(xPos, yPos, zPos);
 
-	glBegin(GL_POLYGON);
+	glBegin(GL_QUADS);
 	//top face
 	glVertex3f(0.0f, 0.0f, 0.0f);
 	glVertex3f(0.0f, 0.0f, -1.0f);

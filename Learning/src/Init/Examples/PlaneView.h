@@ -10,7 +10,7 @@ public:
 	void init() override;
 	void draw() override;
 
-	void processInput(bool* keys) override;
+	void processInput(bool* keys, int mouseX, int mouseY) override;
 	
 
 private:

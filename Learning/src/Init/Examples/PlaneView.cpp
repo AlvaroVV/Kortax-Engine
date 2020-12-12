@@ -58,7 +58,7 @@ void PlaneView::draw()
 
 }
 
-void PlaneView::processInput(bool* keys)
+void PlaneView::processInput(bool* keys, int mouseX, int mouseY)
 {
 	if (keys['W'] )               // Is T Being Pressed And Is tp FALSE
 	{

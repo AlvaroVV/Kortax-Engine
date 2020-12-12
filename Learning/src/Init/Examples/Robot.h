@@ -5,7 +5,6 @@ class Robot : public GLProgram
 public:
 	void init() override;
 	void draw() override;
-	void processInput(bool* keys) override;
 
 private:
 
@@ -13,7 +12,7 @@ private:
 	float legAngle[2] = { 0.0f, 0.0f };
 	float armAngle[2] = { 0.0f, 0.0f };
 
-	GLvoid DrawCube(float xPos, float yPos, float zPos);
+	GLvoid _drawCube(float xPos, float yPos, float zPos);
 
 	void DrawArm(float xPos, float yPos, float zPos);
 	void DrawHead(float xPos, float yPos, float zPos);

@@ -149,7 +149,7 @@ void MovingStars::draw()
 	
 }
 
-void MovingStars::processInput(bool* keys)
+void MovingStars::processInput(bool* keys, int mouseX, int mouseY)
 {
 	if (keys['T'] && !tp)               // Is T Being Pressed And Is tp FALSE
 	{
@@ -182,10 +182,10 @@ void MovingStars::processInput(bool* keys)
 	}
 	if (keys[VK_RIGHT])
 	{
-		yspeed += 0.2f;
+		m_yspeed += 0.2f;
 	}
 	if (keys[VK_LEFT])
 	{
-		yspeed -= 0.2f;
+		m_yspeed -= 0.2f;
 	}
 }

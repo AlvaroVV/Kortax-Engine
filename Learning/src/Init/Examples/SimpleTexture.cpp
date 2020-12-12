@@ -24,8 +24,8 @@ void SimpleTexture::draw()
 	glLoadIdentity();									// Reset The View
 	glTranslatef(0.0f, 0.0f, -5.0f);
 
-	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+	glRotatef(m_xrot, 1.0f, 0.0f, 0.0f);
+	glRotatef(m_yrot, 0.0f, 1.0f, 0.0f);
 	glRotatef(zrot, 0.0f, 0.0f, 1.0f);
 
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -63,7 +63,7 @@ void SimpleTexture::draw()
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);
 	glEnd();
 
-	xrot += 0.3f;
-	yrot += 0.2f;
+	m_xrot += 0.3f;
+	m_yrot += 0.2f;
 	zrot += 0.4f;
 }

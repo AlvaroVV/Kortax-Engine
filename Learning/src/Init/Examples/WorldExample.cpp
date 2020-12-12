@@ -5,7 +5,7 @@ void WorldExample::SetupWorld()
 {
 	FILE *f;
 	char oneline[255];
-	float x, y, z, u, v;
+	float x, y, m_z, u, v;
 	float numTriangles;
 
 	fopen_s(&f, "D:/Proyectos/GitHub/Kortax-Engine/resources/World.txt", "r");
@@ -20,10 +20,10 @@ void WorldExample::SetupWorld()
 		for (int ver = 0; ver < 3; ++ver)
 		{
 			readstr(f, oneline);
-			sscanf_s(oneline, "%f %f %f %f %f", &x, &y, &z, &u, &v);
+			sscanf_s(oneline, "%f %f %f %f %f", &x, &y, &m_z, &u, &v);
 			sector1.triangles[tri].vertex[ver].x = x;
 			sector1.triangles[tri].vertex[ver].y = y;
-			sector1.triangles[tri].vertex[ver].z = z;
+			sector1.triangles[tri].vertex[ver].m_z = m_z;
 			sector1.triangles[tri].vertex[ver].u = u;
 			sector1.triangles[tri].vertex[ver].v = v;
 		}
@@ -66,7 +66,7 @@ void WorldExample::draw()
 	glLoadIdentity();
 	GLfloat l_x, l_y, l_z, l_u, l_v;
 	GLfloat ztrans = -zpos;
-	GLfloat sceneroty = -yrot;
+	GLfloat sceneroty = -m_yrot;
 
 	int numtriangles;
 
@@ -89,7 +89,7 @@ void WorldExample::draw()
 		{
 			l_x = sector1.triangles[tri].vertex[ver].x;
 			l_y = sector1.triangles[tri].vertex[ver].y;
-			l_z = sector1.triangles[tri].vertex[ver].z;
+			l_z = sector1.triangles[tri].vertex[ver].m_z;
 			l_u = sector1.triangles[tri].vertex[ver].u;
 			l_v = sector1.triangles[tri].vertex[ver].v;
 			glTexCoord2f(l_u, l_v); glVertex3f(l_x, l_y, l_z);
@@ -98,16 +98,16 @@ void WorldExample::draw()
 	}
 }
 
-void WorldExample::processInput(bool * keys)
+void WorldExample::processInput(bool * keys, int mouseX, int mouseY)
 {
 	if (keys[VK_RIGHT])
 	{
-		yrot -= 1.2;
+		m_yrot -= 1.2;
 	}
 
 	if (keys[VK_LEFT])
 	{
-		yrot += 1.2f;
+		m_yrot += 1.2f;
 	}
 
 	if (keys[VK_UP])
