@@ -1,0 +1,49 @@
+#pragma once
+#include "Init\GLProgram.h"
+
+
+class C7_SimpleBitmap : public GLProgram
+{
+
+public:
+
+	void init() override;
+	void draw() override;
+	void processInput(bool* keys, int mouseX, int mouseY) override;
+
+private:
+	void _simpleBitmap();
+	void _textureExample();
+	
+
+private:
+	unsigned char m_letterA[32] =
+	{
+		0xC0,0x03,
+		0xC0,0x03,
+		0xC0,0x03,
+		0xC0,0x03,
+		0xC0,0x03,
+		0xDF,0xFB,
+		0x7F,0xFE,
+		0x60,0x06,
+		0x30,0x0C,
+		0x30,0x0C,
+		0x18,0x18,
+		0x18,0x18,
+		0x0C,0x30,
+		0x0C,0x30,
+		0x07,0xE0,
+		0x07,0xE0,
+	};
+
+	//Tex ids
+	GLuint m_texBMP;
+	GLuint m_texTarga;
+	GLuint m_texPNG;
+
+	float m_angle = 0.0f;
+
+	bool m_keyPushed;
+};
+
