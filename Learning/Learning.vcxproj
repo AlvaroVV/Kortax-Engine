@@ -98,7 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)extern\LIBPNG\include;$(SolutionDir)extern\Zlib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)extern\LIBPNG\include;$(SolutionDir)extern\Zlib\include;$(SolutionDir)Learning\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,6 +158,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Init\Examples\Book\C8_Terrain.h" />
+    <ClInclude Include="src\Init\Examples\Book\C6_Blending.h" />
+    <ClInclude Include="src\Init\Examples\Book\C6_SimpleLight.h" />
+    <ClInclude Include="src\Init\Examples\Book\C7_SimpleBitmap.h" />
+    <ClInclude Include="src\Init\Examples\Projection_Simple.h" />
     <ClInclude Include="src\Init\Examples\Robot.h" />
     <ClInclude Include="src\Init\Examples\PlaneView.h" />
     <ClInclude Include="src\Init\Examples\DisplayList.h" />
@@ -168,10 +173,17 @@
     <ClInclude Include="src\Init\Examples\ShapeAndColors.h" />
     <ClInclude Include="src\Init\Examples\SimpleTexture.h" />
     <ClInclude Include="src\Init\GLProgram.h" />
+    <ClInclude Include="src\utils\BmpResolver.h" />
     <ClInclude Include="src\utils\PngResolver.h" />
     <ClInclude Include="src\Init\Examples\Transparency.h" />
+    <ClInclude Include="src\utils\TargaResolver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Init\Examples\Book\C8_Terrain.cpp" />
+    <ClCompile Include="src\Init\Examples\Book\C6_Blending.cpp" />
+    <ClCompile Include="src\Init\Examples\Book\C6_SimpleLight.cpp" />
+    <ClCompile Include="src\Init\Examples\Book\C7_SimpleBitmap.cpp" />
+    <ClCompile Include="src\Init\Examples\Projection_Simple.cpp" />
     <ClCompile Include="src\Init\Examples\Robot.cpp" />
     <ClCompile Include="src\Init\Examples\PlaneView.cpp" />
     <ClCompile Include="src\Init\Examples\DisplayList.cpp" />
@@ -183,11 +195,16 @@
     <ClCompile Include="src\Init\GLProgram.cpp" />
     <ClCompile Include="src\Init\Examples\SimpleTexture.cpp" />
     <ClCompile Include="src\Init\Lesson1.cpp" />
+    <ClCompile Include="src\utils\BmpResolver.cpp" />
     <ClCompile Include="src\utils\PngResolver.cpp" />
     <ClCompile Include="src\Init\Examples\Transparency.cpp" />
+    <ClCompile Include="src\utils\TargaResolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Init\bricks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\Init\WindowsNotes.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
