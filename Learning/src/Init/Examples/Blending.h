@@ -4,21 +4,21 @@
 class Blending :
 	public GLProgram
 {
-	BOOL light;	//Light ON / OFF
+	BOOL m_light;	//Light ON / OFF
 	BOOL blend; //BLend ON / OFF
-	BOOL lp;	//L pressed
+	BOOL m_lp;	//L pressed
 	BOOL fp;	//F Pressed
 	BOOL bp;	//B Pressed
 
-	GLfloat xrot;       // X Rotation
-	GLfloat yrot;       // Y Rotation
-	GLfloat xspeed;     // X Rotation Speed
-	GLfloat yspeed;     // Y Rotation Speed
-	GLfloat z = -5.0f; // Depth Into The Screen
+	GLfloat m_xrot;       // X Rotation
+	GLfloat m_yrot;       // Y Rotation
+	GLfloat m_xspeed;     // X Rotation Speed
+	GLfloat m_yspeed;     // Y Rotation Speed
+	GLfloat m_z = -5.0f; // Depth Into The Screen
 
-	GLfloat LightAmbient[4] = { 0.5f, 0.5f, 0.5f, 1.0f };                 // Ambient Light Values ( NEW )
-	GLfloat LightDiffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };              // Diffuse Light Values ( NEW )
-	GLfloat LightPosition[4] = { 0.0f, 0.0f, 2.0f, 1.0f };
+	GLfloat m_LightAmbient[4] = { 0.5f, 0.5f, 0.5f, 1.0f };                 // Ambient Light Values ( NEW )
+	GLfloat m_LightDiffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };              // Diffuse Light Values ( NEW )
+	GLfloat m_LightPosition[4] = { 0.0f, 0.0f, 2.0f, 1.0f };
 
 	GLuint  filter = 0;                                 // Which Filter To Use
 	GLuint  texture[3];                             // Storage for 3 textures
@@ -26,7 +26,7 @@ class Blending :
 public:
 	void init() override;
 	void draw() override;
-	void processInput(bool* keys) override;
+	void processInput(bool* keys, int mouseX, int mouseY) override;
 
 private:
 	void _loadTextures();

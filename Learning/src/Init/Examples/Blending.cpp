@@ -13,9 +13,9 @@ void Blending::init()
 	glDepthFunc(GL_LEQUAL);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-	glLightfv(GL_LIGHT1, GL_AMBIENT, LightAmbient);
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, LightDiffuse);
-	glLightfv(GL_LIGHT1, GL_POSITION, LightPosition);            
+	glLightfv(GL_LIGHT1, GL_AMBIENT, m_LightAmbient);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, m_LightDiffuse);
+	glLightfv(GL_LIGHT1, GL_POSITION, m_LightPosition);            
 	glEnable(GL_LIGHT1);
 
 	//glColor4f(1.0f, 1.0f, 1.0f, 0.5f);         // Full Brightness, 50% Alpha 
@@ -27,9 +27,9 @@ void Blending::draw()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	glTranslatef(0.0f, 0.0f, z);
-	glRotatef(xrot, 1.0f, 0.0f, 0.0f);
-	glRotatef(yrot, 0.0f, 1.0f, 0.0f);
+	glTranslatef(0.0f, 0.0f, m_z);
+	glRotatef(m_xrot, 1.0f, 0.0f, 0.0f);
+	glRotatef(m_yrot, 0.0f, 1.0f, 0.0f);
 
 	glBindTexture(GL_TEXTURE_2D, texture[filter]);              // Select A Texture Based On filter
 
@@ -72,8 +72,8 @@ void Blending::draw()
 	glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.0f, 1.0f, -1.0f);  // Point 4 (Left)
 	glEnd();
 
-	xrot += xspeed;
-	yrot += yspeed;
+	m_xrot += m_xspeed;
+	m_yrot += m_yspeed;
 
 }
 
@@ -124,13 +124,13 @@ void Blending::_loadTextures()
 
 }
 
-void Blending::processInput(bool* keys)
+void Blending::processInput(bool* keys, int mouseX, int mouseY)
 {
-	if (keys['L'] && !lp)
+	if (keys['L'] && !m_lp)
 	{
-		lp = TRUE;
-		light = !light;
-		if (!light)
+		m_lp = TRUE;
+		m_light = !m_light;
+		if (!m_light)
 		{
 			glDisable(GL_LIGHTING);
 		}
@@ -138,11 +138,11 @@ void Blending::processInput(bool* keys)
 		{
 			glEnable(GL_LIGHTING);
 		}
-		printf(light ? "Light ON \n" : "LIGHT OFF \n");
+		printf(m_light ? "Light ON \n" : "LIGHT OFF \n");
 	}
 	if (!keys['L'])
 	{
-		lp = FALSE;
+		m_lp = FALSE;
 	}
 	if (keys['F'] && !fp)
 	{
@@ -160,27 +160,27 @@ void Blending::processInput(bool* keys)
 	}
 	if (keys[VK_PRIOR])
 	{
-		z -= 0.02f;
+		m_z -= 0.02f;
 	}
 	if (keys[VK_NEXT])
 	{
-		z += 0.02f;
+		m_z += 0.02f;
 	}
 	if (keys[VK_UP])
 	{
-		xspeed -= 0.01f;
+		m_xspeed -= 0.01f;
 	}
 	if (keys[VK_DOWN])
 	{
-		xspeed += 0.01f;
+		m_xspeed += 0.01f;
 	}
 	if (keys[VK_RIGHT])
 	{
-		yspeed += 0.01f;
+		m_yspeed += 0.01f;
 	}
 	if (keys[VK_LEFT])
 	{
-		yspeed -= 0.01f;
+		m_yspeed -= 0.01f;
 	}
 	if (keys['B'] && !bp)               // Is B Key Pressed And bp FALSE?
 	{
