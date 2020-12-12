@@ -1,0 +1,14 @@
+========== RESUMEN ============
+- WinMain: Entry point del programa
+	- MessageLoop: PeakMessage -> TranslateMessage -> DispatchMessage (WinProc) -> GameLogic
+- WndProc: Eventos de Windows al programa a modo de mensajes.
+
+- Registramos la clase ventana con RegisterClass
+- Creamos la ventana de la clase registrada CreateWindowEx
+
+-Creamos el RenderingContext
+	*Nota: Un contexto sirve para recordar settings y comandos.
+	-Conseguimos el DeviceContext (normalmente el de la ventana), el cual está especificado en la llamada al GDI
+	-Creamos el PixelFormat, el cual debe ser compatible entre ambos contextos.
+	-Creamos el RenderingContext con el DeviceContext: wglCreateContext(deviceContext)
+	-wglMakeCurrent para activar el context.
