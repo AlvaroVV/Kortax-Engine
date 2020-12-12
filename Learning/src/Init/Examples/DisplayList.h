@@ -12,8 +12,8 @@ private:
 	GLuint xloop;
 	GLuint yloop;
 
-	GLfloat xrot;
-	GLfloat yrot;
+	GLfloat m_xrot;
+	GLfloat m_yrot;
 
 	GLfloat boxcol[5][3] =                                // Array For Box Colors
 	{
@@ -35,7 +35,7 @@ public:
 	
 	void init() override;
 	void draw() override;
-	void processInput(bool* keys) override;
+	void processInput(bool* keys, int mouseX, int mouseY) override;
 
 };
 

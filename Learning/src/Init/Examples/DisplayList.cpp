@@ -78,8 +78,8 @@ void DisplayList::draw()
 		{
 			glLoadIdentity();							// Reset The View
 			glTranslatef(1.4f + (float(xloop)*2.8f) - (float(yloop)*1.4f), ((6.0f - float(yloop))*2.4f) - 7.0f, -20.0f);
-			glRotatef(45.0f - (2.0f*yloop) + xrot, 1.0f, 0.0f, 0.0f);
-			glRotatef(45.0f + yrot, 0.0f, 1.0f, 0.0f);
+			glRotatef(45.0f - (2.0f*yloop) + m_xrot, 1.0f, 0.0f, 0.0f);
+			glRotatef(45.0f + m_yrot, 0.0f, 1.0f, 0.0f);
 			glColor3fv(boxcol[yloop - 1]);
 			glCallList(box);
 			glColor3fv(topcol[yloop - 1]);
@@ -88,22 +88,22 @@ void DisplayList::draw()
 	}
 }
 
-void DisplayList::processInput(bool * keys)
+void DisplayList::processInput(bool * keys, int mouseX, int mouseY)
 {
 	if (keys[VK_LEFT])
 	{
-		yrot -= 0.2f;
+		m_yrot -= 0.2f;
 	}
 	if (keys[VK_RIGHT])
 	{
-		yrot += 0.2f;
+		m_yrot += 0.2f;
 	}
 	if (keys[VK_UP])
 	{
-		xrot -= 0.2f;
+		m_xrot -= 0.2f;
 	}
 	if (keys[VK_DOWN])
 	{
-		xrot += 0.2f;
+		m_xrot += 0.2f;
 	}
 }
