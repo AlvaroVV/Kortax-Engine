@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sandbox", "Sandbox\Sandbox.vcxproj", "{51B1A15B-7AC1-4F13-835A-DF582333C4BC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kortax", "Kortax\Kortax.vcxproj", "{59B166DD-850E-4245-B4A3-92A6644BE0BE}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Learning", "Learning\Learning.vcxproj", "{94587E7F-3A9F-4D96-BB79-92146E59150F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Opengl_1-1", "Learning\Learning.vcxproj", "{94587E7F-3A9F-4D96-BB79-92146E59150F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Opengl_3", "Opengl_3\Opengl_3.vcxproj", "{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,14 @@ Global
 		{94587E7F-3A9F-4D96-BB79-92146E59150F}.Release|Win32.Build.0 = Release|Win32
 		{94587E7F-3A9F-4D96-BB79-92146E59150F}.Release|x64.ActiveCfg = Release|x64
 		{94587E7F-3A9F-4D96-BB79-92146E59150F}.Release|x64.Build.0 = Release|x64
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Debug|Win32.Build.0 = Debug|Win32
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Debug|x64.ActiveCfg = Debug|x64
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Debug|x64.Build.0 = Debug|x64
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Release|Win32.ActiveCfg = Release|Win32
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Release|Win32.Build.0 = Release|Win32
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Release|x64.ActiveCfg = Release|x64
+		{0C549F99-1437-4223-9BF1-40ACDB9EFF6C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
