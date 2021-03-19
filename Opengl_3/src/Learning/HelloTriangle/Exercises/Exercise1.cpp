@@ -14,7 +14,7 @@ Exercise1::Exercise1()
     };
 }
 
-Exercise1::~Exercise1()
+Exercise1::~Exercise1() 
 {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
@@ -22,6 +22,7 @@ Exercise1::~Exercise1()
 
 void Exercise1::init()
 {
+    GLProgram::init();
     //Creamos el vertex buffer para almacenar el vertex data
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -39,12 +40,14 @@ void Exercise1::init()
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+
 }
 
 void Exercise1::draw()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    useDefaultProgram();
+    glUseProgram(mDefaultShader);
 
     glBindVertexArray(VAO);
 

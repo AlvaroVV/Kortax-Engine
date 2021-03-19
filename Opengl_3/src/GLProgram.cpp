@@ -15,26 +15,43 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
 "}\n\0";
 
+GLProgram::GLProgram()
+{
+    std::cout << "GLProgram: Constructor" << std::endl;
+    mDefaultShader = loadDefaultShaderProgram();
+}
+
 
 GLProgram::~GLProgram()
 {
-	std::cout << "DESTRUCTOR padre" << std::endl;
-    if(shaderProgram > 0)
-        glDeleteProgram(shaderProgram);
+	std::cout << "GLProgram: Destructor" << std::endl;
+    if(mDefaultShader > 0)
+        glDeleteProgram(mDefaultShader);
 }
 
-void GLProgram::useDefaultProgram()
+void GLProgram::init()
 {
-    _loadDefaultShaderProgram();
-    glUseProgram(shaderProgram);
+    std::cout << "GLProgram: Init" << std::endl;
+    loadDefaultShaderProgram();
 }
 
-void GLProgram::_loadDefaultShaderProgram()
+void GLProgram::draw()
 {
+    std::cout << "GLProgram: Draw" << std::endl;
+}
+
+unsigned int GLProgram::loadDefaultShaderProgram()
+{
+    return loadShaderProgram(vertexShaderSource, fragmentShaderSource);
+}
+
+unsigned int GLProgram::loadShaderProgram(const char* vertexShaderCode, const char* fragmentShaderCode)
+{
+    unsigned int shaderProgram;
     //Creamos el vertex shader y compilamos
     unsigned int vertexShader;
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glShaderSource(vertexShader, 1, &vertexShaderCode, NULL);
     glCompileShader(vertexShader);
 
     //Nos aseguramos de que no contiene errores de compilacion
@@ -50,7 +67,7 @@ void GLProgram::_loadDefaultShaderProgram()
     //Fragment shader
     unsigned int fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glShaderSource(fragmentShader, 1, &fragmentShaderCode, NULL);
     glCompileShader(fragmentShader);
 
     //Shader program
@@ -69,4 +86,6 @@ void GLProgram::_loadDefaultShaderProgram()
 
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
+
+    return shaderProgram;
 }

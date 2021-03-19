@@ -2,6 +2,8 @@
 #include <GLFW\glfw3.h>
 #include "Learning\HelloTriangle\HelloTriangle.h"
 #include "Learning\HelloTriangle\Exercises\Exercise1.h"
+#include "Learning\HelloTriangle\Exercises\Exercise_2.h"
+#include "Learning\HelloTriangle\Exercises\Exercise_3.h"
 
 #include <iostream>
 
@@ -45,7 +47,7 @@ int main(int argc, char* argv[])
     //Podemos utilizar unas dimensiones menores que glfw. Opengl tomará en cuenta las dimensiones de glviewport
     glViewport(0, 0, 800, 600);
 
-    program = new HelloTriangleExcercises::Exercise1();
+    program = new HelloTriangleExcercises::Exercise_2();
 
     program->init();
 

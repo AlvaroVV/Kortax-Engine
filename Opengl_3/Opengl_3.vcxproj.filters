@@ -30,6 +30,12 @@
     <ClCompile Include="src\Learning\HelloTriangle\Exercises\Exercise1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Learning\HelloTriangle\Exercises\Exercise_2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Learning\HelloTriangle\Exercises\Exercise_3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="third-parties\include\GLAD\glad.h">
@@ -45,6 +51,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Learning\HelloTriangle\Exercises\Exercise1.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learning\HelloTriangle\Exercises\Exercise_2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Learning\HelloTriangle\Exercises\Exercise_3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -26,7 +26,7 @@ HelloTriangle::~HelloTriangle()
 
 void HelloTriangle::init()
 {
-
+    GLProgram::init();
     //Creamos el vertex buffer para almacenar el vertex data
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -50,7 +50,7 @@ void HelloTriangle::init()
 
 void HelloTriangle::draw()
 {
-    useDefaultProgram();
+    glUseProgram(mDefaultShader);
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);

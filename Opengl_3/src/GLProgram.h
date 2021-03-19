@@ -5,18 +5,24 @@ class GLProgram
 {
 
 public:
+
+	GLProgram();
 	virtual ~GLProgram();
 
-	virtual void init() = 0;
-	virtual void draw() = 0;
+	virtual void init();
+	virtual void draw();
+
 
 protected:
-	unsigned int shaderProgram;
 
-	void useDefaultProgram();
-	unsigned int getShaderProgram() const { return shaderProgram; } 
+	unsigned int loadShaderProgram(const char* vertexShaderCode, const char* fragmentShaderCode);
 
 private:
-	virtual void _loadDefaultShaderProgram();
+
+	unsigned int loadDefaultShaderProgram();
+
+protected:
+
+	unsigned int mDefaultShader;
 };
 

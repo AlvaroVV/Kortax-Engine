@@ -18,7 +18,7 @@ namespace HelloTriangleExcercises
 
     public:
         Exercise1();
-        ~Exercise1();
+        virtual ~Exercise1();
 
         void init() override;
         void draw() override;
